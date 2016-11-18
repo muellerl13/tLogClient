@@ -6,6 +6,8 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import {Security} from "../providers/security";
 import {LoginPage} from "../pages/login/login";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RegisterPage} from "../pages/register/register";
 
 @NgModule({
   declarations: [
@@ -13,10 +15,11 @@ import {LoginPage} from "../pages/login/login";
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    LoginPage
+    LoginPage,
+    RegisterPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp), ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -24,7 +27,8 @@ import {LoginPage} from "../pages/login/login";
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    LoginPage
+    LoginPage,
+    RegisterPage
   ],
   providers: [Security]
 })

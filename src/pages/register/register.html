@@ -7,12 +7,35 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Create a tLog Account</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <ion-list no-lines="">
+      <ion-item>
+      <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="formErrors.username" class="item-md-danger">
+        {{ formErrors.username }}
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+        </ion-item>
+      <ion-item *ngIf="formErrors.email" class="item-md-danger">
+          {{ formErrors.email }}
+      </ion-item>
 
+      <ion-item>
+        <ion-input type="text" placeholder="Password" formControlName="password"></ion-input>
+        </ion-item>
+      <ion-item class="item-md-danger" *ngIf="formErrors.password" >
+          {{ formErrors.password }}
+      </ion-item>
+    </ion-list>
+    <button (click)="register()"  ion-button [disabled]="!registerForm.valid">Register</button>
+  </form>
 </ion-content>
