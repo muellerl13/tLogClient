@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FormBuilder,FormGroup,Validators} from "@angular/forms"
-import {User} from "../../models/user"
+import {User} from "../../models/user";
+import {Security} from "../../providers/security";
+import {ListPage} from "../list/list";
 
 
 /*
@@ -20,8 +22,13 @@ export class RegisterPage {
 
   registerForm: FormGroup;
   user: User = new User();
+  error: string;
 
-  constructor(public navCtrl: NavController, private fb:FormBuilder) {this.onValueChanged()}
+  constructor(public navCtrl: NavController, private fb:FormBuilder, private security: Security) {this.onValueChanged()}
+
+  onSubmit() {
+    this.user = this.registerForm.value;
+  }
 
   buildForm(): void {
     this.registerForm = this.fb.group({
@@ -79,6 +86,11 @@ export class RegisterPage {
     'password':'',
     'email':''
   };
+
+  register() {
+    this.security.register(this.registerForm.value).then(()=>this.navCtrl.setRoot(ListPage))
+      .catch(err => this.error = err.message);
+  }
 
 
   ionViewDidLoad() {

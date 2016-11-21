@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {Security} from "../../providers/security";
 import {Dialogs} from "ionic-native";
 import {RegisterPage} from "../register/register";
+import {ListPage} from "../list/list";
 
 /*
   Generated class for the Login page.
@@ -29,7 +30,7 @@ export class LoginPage {
   }
   login() {
     this.security.login(this.username,this.password)
-      .then(()=>console.log("Hurra!"))
+      .then(()=>this.navCtrl.setRoot(ListPage))
       .catch((err) => {Dialogs.alert(err._body,"Error");console.error(err._body)});
   }
 

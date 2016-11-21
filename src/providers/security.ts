@@ -4,7 +4,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Promise} from 'es6-promise';
 import {Storage} from '@ionic/storage';
-import {JwtHelper} from 'angular2-jwt';
+import {JwtHelper, tokenNotExpired} from 'angular2-jwt';
+import {User} from "../models/user";
 
 /*
   Generated class for the Security provider.
@@ -17,28 +18,44 @@ export class Security {
 
   private host = "http://127.0.0.1:3000/api";
   private loginURI = "/auth/login";
+  private registerURI = "/auth/signup";
 
   private storage = new Storage();
-  private decodeToken = new JwtHelper().decodeToken;
+
 
   constructor(public http: Http) {}
 
-  encode(part:string) {
+  static encode(part:string) {
     return encodeURIComponent(part).replace("%20","+");
   }
 
-  private storeToken(token:string) {
-    this.storage.set('id_token',token);
-    this.storage.set('user',this.decodeToken(token));
+  getToken() { return this.storage.get('id_token');}
+  getUser() {return this.storage.get('user');}
+  isTokenExpired() {
+    return this.getToken().then(token => !token || new JwtHelper().isTokenExpired(token))
   }
+
+  static loggedIn() {return tokenNotExpired();}
+
+  storeToken(token:string) {
+    this.storage.set('id_token',token);
+    this.storage.set('user',new JwtHelper().decodeToken(token));
+  }
+
+
 
   login(username: string, password:string):Promise<boolean> {
     let headers = new Headers();
     headers.append("Content-Type",'application/x-www-form-urlencoded');
     return this.http.post(this.host+this.loginURI,
-      `username=${this.encode(username)}&password=${this.encode(password)}`,
+      `username=${Security.encode(username)}&password=${Security.encode(password)}`,
       {headers: headers}
-    ).map((res) => res.json().token).toPromise().then(this.storeToken).then(()=>true);
+    ).toPromise().then((res) => res.json().token).then(this.storeToken.bind(this)).then(()=>true);
+  }
+
+  register(user:User):Promise<boolean> {
+    const store = this.storeToken
+    return this.http.post(this.host+this.registerURI,user).toPromise().then((res) => res.json().token).then(store.bind(this)).then(()=>true);
   }
 
 }

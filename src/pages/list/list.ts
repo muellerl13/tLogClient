@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
+import {Security} from '../../providers/security';
+import {LoginPage} from "../login/login";
 
 
 @Component({
@@ -13,7 +15,7 @@ export class ListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private security: Security) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
@@ -28,6 +30,12 @@ export class ListPage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+  }
+
+  ionViewDidLoad() {
+    console.log("LOGGED IN: " + Security.loggedIn());
+    this.security.isTokenExpired().then(exp => {console.log(exp); if (exp) this.navCtrl.setRoot(LoginPage)});
+    this.security.getToken().then(token => console.log("TOKEN: " + token));
   }
 
   itemTapped(event, item) {

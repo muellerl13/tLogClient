@@ -8,6 +8,20 @@ import {Security} from "../providers/security";
 import {LoginPage} from "../pages/login/login";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterPage} from "../pages/register/register";
+import {Storage} from '@ionic/storage';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http } from '@angular/http';
+
+let storage = new Storage();
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: '',
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),
+  }), http);
+}
 
 @NgModule({
   declarations: [
@@ -30,6 +44,11 @@ import {RegisterPage} from "../pages/register/register";
     LoginPage,
     RegisterPage
   ],
-  providers: [Security]
+  providers: [Security,
+    {
+      provide: AuthHttp,
+      useFactory: getAuthHttp,
+      deps: [Http]
+    }]
 })
 export class AppModule {}

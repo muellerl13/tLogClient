@@ -14,6 +14,11 @@
 
 
 <ion-content padding>
+  <ion-card *ngIf="error" class="alert-message">
+    <ion-card-header>Error</ion-card-header>
+    <ion-card-content>{{error}}</ion-card-content>
+
+  </ion-card>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <ion-list no-lines="">
       <ion-item>
@@ -30,7 +35,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-input type="text" placeholder="Password" formControlName="password"></ion-input>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
         </ion-item>
       <ion-item class="item-md-danger" *ngIf="formErrors.password" >
           {{ formErrors.password }}
