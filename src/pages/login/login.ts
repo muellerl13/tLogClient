@@ -17,25 +17,19 @@ import {ListPage} from "../list/list";
 })
 export class LoginPage {
 
-
-  ionViewDidLoad() {
-    console.log('Hello LoginPage Page');
-  }
-
   public password: string;
   public username: string;
   public error: string;
   constructor(private navCtrl: NavController, private security: Security) {
 
   }
-  login() {
+  login = () =>
     this.security.login(this.username,this.password)
       .then(()=>this.navCtrl.setRoot(ListPage))
       .catch((err) => {Dialogs.alert(err._body,"Error");console.error(err._body)});
-  }
 
-  register() {
-    this.navCtrl.setRoot(RegisterPage);
-  }
+
+  register = () => this.navCtrl.push(RegisterPage)
+
 
 }

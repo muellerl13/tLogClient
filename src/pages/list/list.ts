@@ -32,9 +32,9 @@ export class ListPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log("LOGGED IN: " + Security.loggedIn());
-    this.security.isTokenExpired().then(exp => {console.log(exp); if (exp) this.navCtrl.setRoot(LoginPage)});
+  ionViewWillEnter = () => {
+    this.security.whoami().then(user => console.log("USER: " +user));
+    this.security.loggedIn().then(exp => {console.log(exp); if (exp) this.navCtrl.setRoot(LoginPage)});
     this.security.getToken().then(token => console.log("TOKEN: " + token));
   }
 
