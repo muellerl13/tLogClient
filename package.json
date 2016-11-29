@@ -10,7 +10,8 @@
     "emulate:before": "build",
     "deploy:before": "build",
     "build:before": "build",
-    "run:before": "build"
+    "run:before": "build",
+    "test": "ng test"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
@@ -35,7 +36,25 @@
     "@ionic/app-scripts": "0.0.39",
     "ip": "^1.1.4",
     "replace": "^0.3.0",
-    "typescript": "2.0.6"
+    "typescript": "2.0.6",
+    "@types/jasmine": "^2.5.38",
+    "@types/node": "^6.0.51",
+    "angular-cli": "^1.0.0-beta.21",
+    "browserify": "^13.1.1",
+    "browserify-istanbul": "^2.0.0",
+    "codelyzer": "^2.0.0-beta.1",
+    "isparta": "^4.0.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.2.1",
+    "karma-remap-istanbul": "^0.2.1",
+    "run-sequence": "^1.2.2",
+    "tsify": "^2.0.3",
+    "watchify": "^3.7.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",

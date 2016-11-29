@@ -11,8 +11,8 @@ replace(
 {
   regex: hostRegex,
   replacement: "http://"+address,
-  paths: ['./src/providers/security.ts'],
+  paths: ['./src/providers/serverconfig.ts'],
   recursive: false,
-  silent: false,
+  silent: false
 });
 

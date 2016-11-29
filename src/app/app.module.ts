@@ -11,6 +11,10 @@ import {RegisterPage} from "../pages/register/register";
 import {Storage} from '@ionic/storage';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http } from '@angular/http';
+import {Serverconfig} from "../providers/serverconfig";
+import {Tlog} from "../providers/tlog";
+import {AddTripPage} from "../pages/add-trip/add-trip";
+
 
 let storage = new Storage();
 
@@ -30,7 +34,8 @@ export function getAuthHttp(http) {
     ItemDetailsPage,
     ListPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AddTripPage
   ],
   imports: [
     IonicModule.forRoot(MyApp), ReactiveFormsModule
@@ -42,13 +47,17 @@ export function getAuthHttp(http) {
     ItemDetailsPage,
     ListPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AddTripPage
   ],
   providers: [Security,
     {
       provide: AuthHttp,
       useFactory: getAuthHttp,
       deps: [Http]
-    }]
+    },
+    Serverconfig,
+    Tlog
+  ]
 })
 export class AppModule {}

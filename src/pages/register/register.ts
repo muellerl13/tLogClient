@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FormBuilder,FormGroup,Validators} from "@angular/forms"
-import {User} from "../../models/user";
+import {User} from "../../models/models";
 import {Security} from "../../providers/security";
 import {ListPage} from "../list/list";
 
@@ -95,7 +95,6 @@ export class RegisterPage {
 
   ionViewDidLoad() {
 
-    console.log('Hello RegisterPage Page');
   }
 
 

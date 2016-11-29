@@ -25,20 +25,20 @@
       <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
       </ion-item>
       <ion-item *ngIf="formErrors.username" class="item-md-danger">
-        {{ formErrors.username }}
+        <p>{{ formErrors.username }}</p>
       </ion-item>
       <ion-item>
         <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
         </ion-item>
       <ion-item *ngIf="formErrors.email" class="item-md-danger">
-          {{ formErrors.email }}
+        <p>{{ formErrors.email }}</p>
       </ion-item>
 
       <ion-item>
         <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
         </ion-item>
       <ion-item class="item-md-danger" *ngIf="formErrors.password" >
-          {{ formErrors.password }}
+        <p>{{ formErrors.password }}</p>
       </ion-item>
     </ion-list>
     <button (click)="register()"  ion-button [disabled]="!registerForm.valid">Register</button>

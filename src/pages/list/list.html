@@ -1,20 +1,27 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>My First List</ion-title>
-  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>My Trips</ion-title>
+
+    </ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="addTrip()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
+      <ion-icon name="map" item-left></ion-icon>
+      {{item.name}}
+
     </button>
   </ion-list>
   <div *ngIf="selectedItem" padding>

@@ -5,6 +5,7 @@ import {Dialogs} from "ionic-native";
 import {RegisterPage} from "../register/register";
 import {ListPage} from "../list/list";
 
+
 /*
   Generated class for the Login page.
 
@@ -24,9 +25,9 @@ export class LoginPage {
 
   }
   login = () =>
-    this.security.login(this.username,this.password)
+      this.security.login(this.username,this.password)
       .then(()=>this.navCtrl.setRoot(ListPage))
-      .catch((err) => {Dialogs.alert(err._body,"Error");console.error(err._body)});
+      .catch((err) => {Dialogs.alert(`Could not log you in: ${err._body}`,"Error");console.error(err._body)});
 
 
   register = () => this.navCtrl.push(RegisterPage)

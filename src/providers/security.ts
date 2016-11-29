@@ -5,7 +5,8 @@ import 'rxjs/add/operator/toPromise';
 import {Promise} from 'es6-promise';
 import {Storage} from '@ionic/storage';
 import {JwtHelper, AuthHttp} from 'angular2-jwt';
-import {User} from "../models/user";
+import {User} from "../models/models";
+import {Serverconfig} from "./serverconfig";
 
 /*
   Generated class for the Security provider.
@@ -16,14 +17,12 @@ import {User} from "../models/user";
 @Injectable()
 export class Security {
 
-  private host = "http://10.12.200.28:3000/api";
-  private loginURI = "/auth/login";
-  private registerURI = "/auth/signup";
+
 
   private storage = new Storage();
 
 
-  constructor(public http: Http, private auth: AuthHttp ) {}
+  constructor(public http: Http, private auth: AuthHttp, private serverconfig: Serverconfig ) {}
 
   static encode(part:string) {
     return encodeURIComponent(part).replace("%20","+");
@@ -36,7 +35,7 @@ export class Security {
   getUser = ():Promise<User> => this.storage.get('user');
 
 
-  whoami = () => this.auth.get(this.host+"/auth/me").toPromise().then(res => res.json());
+  whoami = () => this.auth.get(this.serverconfig.host+"/auth/me").toPromise().then(res => res.json());
 
 
   loggedIn = ():Promise<boolean> => this.getToken().then(token => !token || this.jwtHelper.isTokenExpired(token));
@@ -52,13 +51,14 @@ export class Security {
   login = (username: string, password:string):Promise<boolean> => {
     let headers = new Headers();
     headers.append("Content-Type",'application/x-www-form-urlencoded');
-    return this.http.post(this.host+this.loginURI,
+    return this.http.post(this.serverconfig.loginURI,
       `username=${Security.encode(username)}&password=${Security.encode(password)}`,
       {headers: headers}
     ).toPromise().then((res) => res.json().token).then(this.storeToken).then(()=>true);
   }
 
-  register = (user:User):Promise<boolean> => this.http.post(this.host+this.registerURI,user).toPromise().then((res) => res.json().token).then(this.storeToken);
+  register = (user:User):Promise<boolean> => this.http.post(this.serverconfig.registerURI,user)
+    .toPromise().then((res) => res.json().token).then(this.storeToken);
 
 
 }
