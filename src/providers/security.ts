@@ -16,7 +16,7 @@ import {User} from "../models/user";
 @Injectable()
 export class Security {
 
-  private host = "http://10.12.200.135:3000/api";
+  private host = "http://10.12.200.28:3000/api";
   private loginURI = "/auth/login";
   private registerURI = "/auth/signup";
 

@@ -33,6 +33,8 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "0.0.39",
+    "ip": "^1.1.4",
+    "replace": "^0.3.0",
     "typescript": "2.0.6"
   },
   "cordovaPlugins": [
