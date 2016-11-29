@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, AlertController} from 'ionic-angular';
 import {Security} from "../../providers/security";
-import {Dialogs} from "ionic-native";
 import {RegisterPage} from "../register/register";
 import {ListPage} from "../list/list";
 
@@ -21,13 +20,20 @@ export class LoginPage {
   public password: string;
   public username: string;
   public error: string;
-  constructor(private navCtrl: NavController, private security: Security) {
+  constructor(private navCtrl: NavController, private security: Security, private alertCtrl: AlertController) {
 
   }
+
+  showAlert = (title:string,message:string) =>
+    this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
+
+
   login = () =>
       this.security.login(this.username,this.password)
       .then(()=>this.navCtrl.setRoot(ListPage))
-      .catch((err) => {Dialogs.alert(`Could not log you in: ${err._body}`,"Error");console.error(err._body)});
+      .catch((err) => {
+        this.showAlert("Error",`Could not log you in: ${err._body}`)}
+      );
 
 
   register = () => this.navCtrl.push(RegisterPage)

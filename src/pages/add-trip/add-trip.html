@@ -32,14 +32,14 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Start Date</ion-label>
-        <ion-datetime formControlName="begin"></ion-datetime>
+        <ion-datetime formControlName="begin" max="2020"></ion-datetime>
       </ion-item>
       <ion-item class="item-md-danger" *ngIf="formErrors.begin" >
         {{ formErrors.begin }}
       </ion-item>
       <ion-item>
         <ion-label floating>End Date</ion-label>
-        <ion-datetime formControlName="end"></ion-datetime>
+        <ion-datetime formControlName="end" max="2020"></ion-datetime>
       </ion-item>
       <ion-item class="item-md-danger" *ngIf="formErrors.end" >
         {{ formErrors.end }}

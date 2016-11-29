@@ -79,10 +79,10 @@ export class AddTripPage {
 
   save = () => this.tLogService.addTrip(this.tripForm.value)
     .then(
-      trip => {console.log("TRIP saved successfuly");this.navCtrl.pop()}
+      trip => this.navCtrl.pop()
     )
     .catch(
-      err => {console.log("ERROR: " + JSON.stringify(err));this.showAlert("ERROR",`${err.json().message}`)}
+      err => this.showAlert("ERROR",`${err.json().message}`)
     );
 
   ionViewDidLoad() {
