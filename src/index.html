@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * data: 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' localhost:35729 'unsafe-inline' 'unsafe-eval'">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * data: 'self'; style-src 'self' unpkg.com 'unsafe-inline'; script-src 'self' localhost:* 'unsafe-inline' 'unsafe-eval'">
   <title>Ionic App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
@@ -25,6 +25,7 @@
   </script>-->
 
   <link href="build/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
 </head>
 <body>

@@ -22,6 +22,9 @@ export class Tlog {
 
   addTrip = (trip:Trip):Promise<Trip> =>
     this.authHttp.post(this.serverconfig.tripURI,trip).toPromise()
-      .then(res => res.json())
+      .then(res => res.json());
 
+  loadTrip = (tripID:string):Promise<Trip> =>
+    this.authHttp.get(`${this.serverconfig.tripURI}/${tripID}`)
+      .toPromise().then(res => res.json());
 }

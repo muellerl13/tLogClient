@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-toolbar>
     <ion-navbar>
       <button ion-button menuToggle>
@@ -18,13 +17,10 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item._id)">
       <ion-icon name="map" item-left></ion-icon>
       {{item.name}}
 
     </button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

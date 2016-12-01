@@ -34,11 +34,7 @@ export class Security {
   getToken = ():Promise<string> => this.storage.get('id_token');
   getUser = ():Promise<User> => this.storage.get('user');
 
-
-  whoami = () => this.auth.get(this.serverconfig.host+"/auth/me").toPromise().then(res => res.json());
-
-
-  loggedIn = ():Promise<boolean> => this.getToken().then(token => !token || this.jwtHelper.isTokenExpired(token));
+  isNotloggedIn = ():Promise<boolean> => this.getToken().then(token => !token || this.jwtHelper.isTokenExpired(token));
 
   storeToken = (token:string):Promise<boolean> =>
     Promise.all([

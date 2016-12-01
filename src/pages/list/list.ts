@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 
 import {NavController, NavParams, AlertController} from 'ionic-angular';
-
-import { ItemDetailsPage } from '../item-details/item-details';
 import {Security} from '../../providers/security';
 import {LoginPage} from "../login/login";
 import {Trip} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
 import {AddTripPage} from "../add-trip/add-trip";
+import {TripPage} from "../trip/trip";
 
 
 
@@ -40,12 +39,12 @@ export class ListPage {
     .catch(err => this.showAlert("Error",`Could not retrieve list of trips: ${err.message}`));
 
   ionViewWillEnter = () => {
-    this.security.loggedIn().then(exp => {if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()});
+    this.security.isNotloggedIn().then(exp => {if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()});
   }
 
-  itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
-      item: item
+  itemTapped(event, tripID) {
+    this.navCtrl.push(TripPage, {
+      trip: tripID
     });
   }
 }
