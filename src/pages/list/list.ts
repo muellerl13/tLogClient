@@ -37,7 +37,9 @@ export class ListPage {
 
   loadTrips = () => this.tLogService.getTrips()
     .then(trips => this.items=trips).then(() => {console.log(`length of items = ${this.items.length}`);if (this.items.length === 0) {this.showAlert("INFO","You do not have any trips yet. Press the Plus Icon to create one.") }} )
-    .catch(err => this.showAlert("Error",`Could not retrieve list of trips: ${err.message}`));
+    .catch(err =>
+      this.showAlert("Error",`Could not retrieve list of trips: ${err.message || err}`)
+    );
 
   ionViewWillEnter = () => {
     this.security.loggedIn().then(exp => {if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()});
