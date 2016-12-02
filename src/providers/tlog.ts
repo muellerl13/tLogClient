@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 import {AuthHttp} from "angular2-jwt";
 import {Promise} from "es6-promise";
 import {Serverconfig} from "./serverconfig";
-import {Trip} from '../models/models';
+import {Trip, POI} from '../models/models';
 
 /*
   Generated class for the Tlog provider.
@@ -27,4 +27,8 @@ export class Tlog {
   loadTrip = (tripID:string):Promise<Trip> =>
     this.authHttp.get(`${this.serverconfig.tripURI}/${tripID}`)
       .toPromise().then(res => res.json());
+
+  addPOI = (tripID:string,poi:POI) =>
+  this.authHttp.post(`${this.serverconfig.tripURI}/addpoi/${tripID}`,poi)
+    .toPromise().then(res => res.json());
 }
