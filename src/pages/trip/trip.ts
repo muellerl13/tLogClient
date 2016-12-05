@@ -77,9 +77,9 @@ export class TripPage {
         if (!this.map) this.initMap();
         this.map.panTo(this.center);
         this.currentLocationMarker = this.addCurrentLocationMarker(this.center);
-        this.currentLocationMarker.bindPopup("You are here").openPopup();
+        this.currentLocationMarker.bindPopup("<h3>You are here</h3><p>You can drag this marker. Press the '+' Icon in the Task Bar to add this POI.</p>").openPopup();
         loading.dismiss();
-        this.presentNewPOIActionSheet();
+        //this.presentNewPOIActionSheet();
         return L.latLng(pos.coords.latitude, pos.coords.longitude);
       })
       .catch(err => {
