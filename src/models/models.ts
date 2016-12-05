@@ -12,9 +12,11 @@ export class POI {
   name: string;
   description: string;
   createdAt: Date;
+  loc: {coordinates: number[]}
 }
 
 export class Trip {
+  _id?: string;
   name: string;
   description: string;
   begin: Date;
