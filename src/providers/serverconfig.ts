@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Serverconfig {
 
-  private _host = "http://10.12.200.233:3000/api";
+  private _host = "http://10.12.200.135:3000/api";
   private _loginURI = `${this._host}/auth/login`;
   private _registerURI = `${this._host}/auth/signup`;
   private _mineURI = `${this._host}/trip/mine`;
