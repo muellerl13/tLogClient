@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import {NavController, NavParams, AlertController, LoadingController, Loading} from 'ionic-angular';
 
-import { ItemDetailsPage } from '../item-details/item-details';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Security} from '../../providers/security';
 import {LoginPage} from "../login/login";
 import {Trip} from "../../models/models";
