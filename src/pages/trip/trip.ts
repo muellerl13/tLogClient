@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams, LoadingController, ActionSheetController} from 'ionic-angular';
-import {Geolocation, Coordinates} from "ionic-native";
+import {Geolocation, Coordinates, ActionSheet} from "ionic-native";
 import "leaflet";
 import "drmonty-leaflet-awesome-markers/js/leaflet.awesome-markers"
 import {Tlog} from "../../providers/tlog";
@@ -40,6 +40,36 @@ export class TripPage {
     this.currentMarkerIcon = L.AwesomeMarkers.icon(this.currentLocationMarkerOptions);
 
   }
+
+  presentPOIActionSheet = (poi:POI):ActionSheet =>
+    this.asCtrl.create({
+      //title: 'Modify your album',
+      buttons: [
+        {
+          text: 'Show Details',
+          handler: () => {
+            this.addPOI();
+          }
+        },
+        {
+          text: 'Edit POI',
+          handler: () => {
+            this.editPOI(poi);
+          }
+        },{
+          text: 'Add Image',
+          handler: () => {
+            this.addPOI();
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    }).present();
 
   presentNewPOIActionSheet = () => {
     let actionSheet = this.asCtrl.create({
@@ -90,7 +120,7 @@ export class TripPage {
   };
 
   poiToLatLng = (poi: POI) => L.latLng(poi.loc.coordinates[1], poi.loc.coordinates[0]);
-  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi)).on('popupopen',this.onPopupOpen);
+  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi)).on('popupopen',this.onPopupOpen(poi));
 
 
   initMap = () => {
@@ -126,8 +156,15 @@ export class TripPage {
     console.log("Marker dragged");
   };
 
-  onPopupOpen = (e:L.LeafletPopupEvent) =>
+  onPopupOpen = (poi:POI) => (e:L.LeafletPopupEvent) => {
     this.map.panTo(e.target.getLatLng());
+    this.presentPOIActionSheet(poi);
+  };
+
+
+  editPOI = (poi:POI) => {
+    console.log("About to edit POI " + JSON.stringify(poi));
+  }
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {

@@ -30,7 +30,6 @@ export class ListPage {
 
   }
 
-
   addTrip = () => this.navCtrl.push(AddTripPage)
 
   showAlert = (title: string, message: string) => this.alertCtrl.create({

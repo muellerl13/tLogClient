@@ -39,8 +39,8 @@ module.exports = {
       dest: '{{WWW}}/assets/css/'
     },
     {
-      src: 'node_modules/leaflet/dist/leaflet.css',
-      dest: '{{WWW}}/assets/css/leaflet.css'
+      src: 'node_modules/leaflet/dist/',
+      dest: '{{WWW}}/assets/css/'
     }
   ]
 };
