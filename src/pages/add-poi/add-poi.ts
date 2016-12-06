@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {Tlog} from "../../providers/tlog";
 import {POI} from "../../models/models";
 
-/*
-  Generated class for the AddPoi page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+/*
+ Generated class for the AddPoi page.
+
+ See http://ionicframework.com/docs/v2/components/#navigation for more info on
+ Ionic pages and navigation.
+ */
 @Component({
   selector: 'page-add-poi',
   templateUrl: 'add-poi.html'
 })
 export class AddPoiPage {
 
-  poi:POI = new POI();
-  poiForm:FormGroup;
+  poi: POI = new POI();
+  poiForm: FormGroup;
+  mode = "new";
+  action: any;
 
   constructor(public navCtrl: NavController,
               private fb: FormBuilder,
@@ -26,14 +29,18 @@ export class AddPoiPage {
               private navParams: NavParams) {
   }
 
-  buildForm = ():void => {
+  buildForm = (): void => {
     this.poiForm = this.fb.group({
-      'name': [this.poi.name,[Validators.required,Validators.maxLength(100),Validators.minLength(3)]],
-      'description': [this.poi.description,[Validators.maxLength(500)]],
+      'name': [this.poi.name, [Validators.required, Validators.maxLength(100), Validators.minLength(3)]],
+      'description': [this.poi.description, [Validators.maxLength(500)]],
     });
   };
 
-  showAlert = (title:string,message:string) => this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
+  showAlert = (title: string, message: string) => this.alertCtrl.create({
+    title: title,
+    message: message,
+    buttons: ['OK']
+  }).present();
 
   validationMessages = {
     'name': {
@@ -46,9 +53,19 @@ export class AddPoiPage {
     }
   };
 
-  onSubmit = () => {console.log("Submitted POI Form!!")};
+  onSubmit = () => {
+    console.log("Submitted POI Form!!")
+  };
 
   ngOnInit(): void {
+    this.action = this.tLogService.addPOI;
+    let poi = this.navParams.get("poi");
+    if (poi) {
+      this.mode = "edit";
+      this.poi = poi;
+      this.action = this.tLogService.updatePOI;
+    }
+    ;
     this.buildForm();
     this.poiForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -71,29 +88,31 @@ export class AddPoiPage {
   };
 
   formErrors = {
-    'name':'',
-    'description':''
+    'name': '',
+    'description': ''
   };
 
   save = () => {
     console.log("SAVING POI!");
-    const trip = this.poiForm.value;
-    const coords:L.LatLng = this.navParams.get("coordinates");
-    trip.loc = {coordinates: [coords.lng,coords.lat]};
-    this.tLogService.addPOI(this.navParams.get("tripID"),trip)
-      .then(
-        trip => this.navCtrl.pop()
-      )
+    const poi = this.poiForm.value;
+    poi._id = this.poi._id;
+    if (!this.poi.loc) {
+      const coords: L.LatLng = this.navParams.get("coordinates");
+      poi.loc = {coordinates: [coords.lng, coords.lat]};
+    }
+    this.action(this.navParams.get("tripID"), poi)
+      .then(poi => {
+        console.log("Saved POI successfully: "+JSON.stringify(poi));
+        this.navCtrl.pop();
+      })
       .catch(
-        err => this.showAlert("ERROR",`${err.json().message}`)
+        err => {
+          console.error("Could not save POI.: " + JSON.stringify(err));
+          this.showAlert("ERROR", `${err.json().message}`);
+        }
       );
   };
 
 
-
-
-  ionViewDidLoad() {
-    console.log('Hello AddPoiPage Page');
-  }
 
 }

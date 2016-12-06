@@ -28,7 +28,13 @@ export class Tlog {
     this.authHttp.get(`${this.serverconfig.tripURI}/${tripID}`)
       .toPromise().then(res => res.json());
 
-  addPOI = (tripID:string,poi:POI) =>
+  addPOI = (tripID:string,poi:POI):Promise<POI> =>
   this.authHttp.post(`${this.serverconfig.tripURI}/addpoi/${tripID}`,poi)
     .toPromise().then(res => res.json());
+
+
+  updatePOI = (tripID:string,poi:POI):Promise<POI> =>
+   this.authHttp.patch(`${this.serverconfig.poiURI}/${poi._id}`,poi)
+     .toPromise().then(res => {console.log("GOT UPDATE RESPONSE: " + res.json()); return res.json()});
+
 }

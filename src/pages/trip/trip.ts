@@ -6,6 +6,7 @@ import "drmonty-leaflet-awesome-markers/js/leaflet.awesome-markers"
 import {Tlog} from "../../providers/tlog";
 import {Trip, POI} from "../../models/models";
 import {AddPoiPage} from "../add-poi/add-poi";
+import {ShowPoiPage} from "../show-poi/show-poi";
 
 
 /*
@@ -48,7 +49,7 @@ export class TripPage {
         {
           text: 'Show Details',
           handler: () => {
-            this.addPOI();
+            this.showPoi(poi);
           }
         },
         {
@@ -164,7 +165,18 @@ export class TripPage {
 
   editPOI = (poi:POI) => {
     console.log("About to edit POI " + JSON.stringify(poi));
-  }
+    this.navCtrl.push(AddPoiPage,
+      {
+        poi: poi,
+        tripID: this.trip._id,
+        coordinates: {lng: poi.loc.coordinates[0], lat:poi.loc.coordinates[1]}
+      });
+  };
+
+  showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
+    poi:poi
+  });
+
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {
