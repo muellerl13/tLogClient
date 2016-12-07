@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 
@@ -10,6 +10,7 @@ import {AddTripPage} from "../add-trip/add-trip";
 import {TripPage} from "../trip/trip";
 
 
+
 @Component({
   templateUrl: 'list.html'
 })
@@ -17,6 +18,8 @@ export class ListPage {
   selectedItem: any;
   icons: string[];
   items: Array<Trip>;
+
+
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -39,18 +42,17 @@ export class ListPage {
   }).present();
 
   loadTrips = () => {
-    let loading = this.loadingCtrl.create({
+    const loading = this.loadingCtrl.create({
       content: "Fetching your trips"
-    })
+    });
     loading.present()
       .then(this.tLogService.getTrips)
-      .then(trips => this.items = trips)
-      .then(() => {
-        loading.dismiss();
-        if (this.items.length === 0) {
-          this.showAlert("INFO", "You do not have any trips yet. Press the Plus Icon to create one.")
-        }
-      })
+      .then(trips => this.items = trips).then(() => {
+      loading.dismiss();
+      if (this.items.length === 0) {
+        this.showAlert("INFO", "You do not have any trips yet. Press the Plus Icon to create one.")
+      }
+    })
       .catch(err => {
         loading.dismiss();
         this.showAlert("Error", `Could not retrieve list of trips: ${err.message || err}`);
