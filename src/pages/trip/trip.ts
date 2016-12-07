@@ -29,8 +29,9 @@ export class TripPage {
       private navParams: NavParams,
       private loadingCtrl: LoadingController
   ) {
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
     this.currentLocationIcon = L.AwesomeMarkers.icon({
-      icon: 'coffee',
+      icon: 'hand-o-down',
       markerColor: 'red'
     });
   }
