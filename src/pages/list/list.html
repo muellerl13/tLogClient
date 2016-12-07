@@ -1,4 +1,5 @@
 <ion-header>
+
   <ion-toolbar>
     <ion-navbar>
       <button ion-button menuToggle>
@@ -18,7 +19,7 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item._id)">
-      <ion-icon name="map" item-left></ion-icon>
+      <i class="fa fa-map-signs" aria-hidden="true"></i>
       {{item.name}}
 
     </button>
