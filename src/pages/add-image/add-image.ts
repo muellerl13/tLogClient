@@ -22,13 +22,14 @@ export class AddImagePage {
     buttons: ['OK']
   }).present();
 
+  description:string;
 
   upload = () => {
     this.security.getToken()
       .then(token =>
         new Transfer().upload(this.image,
           `${this.serverconfig.poiURI}/${this.navParams.get("poi")._id}/image`,
-          {params: {description: "Sample Image"},headers: {authorization: `Bearer ${token}` } }))
+          {params: {description: this.description},headers: {authorization: `Bearer ${token}` } }))
       .then(() => this.navCtrl.pop())
       .catch(err => this.showAlert("ERROR", `Could not upload image (${err.body})`));
   }

@@ -14,7 +14,17 @@
 
 
 <ion-content padding>
-<button ion-button (click)="takePhoto()">Take Image</button>
-  <button ion-button (click)="upload()">Upload</button>
-<img src="{{image}}" alt="the image"/>
+<ion-list>
+  <ion-item>
+    <ion-label floating>Description</ion-label>
+    <ion-textarea rows="2" [(ngModel)]="description"></ion-textarea>
+  </ion-item>
+</ion-list>
+  <button ion-button (click)="takePhoto()" icon-left>
+    <ion-icon name="camera"> </ion-icon> Take Image
+  </button>
+  <button ion-button (click)="upload()" [disabled]="!image" icon-left>
+    <ion-icon name="cloud-upload"></ion-icon> Save
+  </button>
+<img src="{{image}}" />
 </ion-content>
