@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 
 import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 
-import { ItemDetailsPage } from '../item-details/item-details';
 import {Security} from '../../providers/security';
 import {LoginPage} from "../login/login";
 import {Trip} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
 import {AddTripPage} from "../add-trip/add-trip";
+import {TripPage} from "../trip/trip";
 
 
 
@@ -34,7 +34,7 @@ export class ListPage {
 
 
 
-  addTrip = () => this.navCtrl.push(AddTripPage)
+  addTrip = () => this.navCtrl.push(AddTripPage);
 
   showAlert = (title:string,message:string) => this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
 
@@ -60,9 +60,9 @@ export class ListPage {
     this.security.loggedIn().then(exp => {if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()});
   }
 
-  itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
-      item: item
+  itemTapped(event, trip) {
+    this.navCtrl.push(TripPage, {
+      tripID: trip._id
     });
   }
 }

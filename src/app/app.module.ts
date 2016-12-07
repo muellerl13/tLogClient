@@ -14,6 +14,7 @@ import { Http } from '@angular/http';
 import {Serverconfig} from "../providers/serverconfig";
 import {Tlog} from "../providers/tlog";
 import {AddTripPage} from "../pages/add-trip/add-trip";
+import {TripPage} from "../pages/trip/trip";
 
 
 let storage = new Storage();
@@ -35,7 +36,8 @@ export function getAuthHttp(http) {
     ListPage,
     LoginPage,
     RegisterPage,
-    AddTripPage
+    AddTripPage,
+    TripPage
   ],
   imports: [
     IonicModule.forRoot(MyApp), ReactiveFormsModule
@@ -48,7 +50,8 @@ export function getAuthHttp(http) {
     ListPage,
     LoginPage,
     RegisterPage,
-    AddTripPage
+    AddTripPage,
+    TripPage
   ],
   providers: [Security,
     {
