@@ -7,6 +7,7 @@ import {Tlog} from "../../providers/tlog";
 import {Trip, POI} from "../../models/models";
 import {AddPoiPage} from "../add-poi/add-poi";
 import {ShowPoiPage} from "../show-poi/show-poi";
+import {AddImagePage} from "../add-image/add-image";
 
 
 /*
@@ -60,7 +61,7 @@ export class TripPage {
         },{
           text: 'Add Image',
           handler: () => {
-            this.addPOI();
+            this.addImage(poi);
           }
         },{
           text: 'Cancel',
@@ -125,9 +126,16 @@ export class TripPage {
 
 
   initMap = () => {
-    if (this.trip.pois.length > 0) this.center = this.poiToLatLng(this.trip.pois[this.trip.pois.length - 1]);
-    if (this.map) this.map.panTo(this.center)
-    else {
+    if (this.trip.pois.length > 0) {
+      console.log("Setting center to: " + JSON.stringify(this.trip.pois[this.trip.pois.length - 1]));
+      this.center = this.poiToLatLng(this.trip.pois[this.trip.pois.length - 1]);
+    }
+    if (this.map) {
+      this.map.remove();
+      this.map = null;
+    }
+    if (!this.map){
+      console.log("Creating Map!");
       this.map = L
         .map("map")
         .setView(this.center, 13);
@@ -135,11 +143,20 @@ export class TripPage {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
     }
+    console.log(`This is the center: ${JSON.stringify(this.center)}`);
+    if (this.center) {
+      console.log("Paning to center!");
+      this.map.panTo(this.center);
+
+    }
     if (this.markers) this.markers.forEach(m => this.map.removeLayer(m));
     this.markers = this.trip.pois.map(poi => this.poiToCoords(poi).bindPopup(poi.name));
+    console.log(`There are ${this.markers.length} markers`);
     this.path = new L.Polyline(this.markers.map(m=>m.getLatLng()));
+    console.log(`This is the path: ${JSON.stringify(this.path.getLatLngs())}`);
     this.map.addLayer(this.path);
     this.markers.forEach(m => m.addTo(this.map));
+
 
 
   };
@@ -177,6 +194,7 @@ export class TripPage {
     poi:poi
   });
 
+  addImage = (poi:POI) => this.navCtrl.push(AddImagePage,{poi:poi,tripID: this.trip._id});
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {
@@ -189,6 +207,7 @@ export class TripPage {
 
   ionViewWillEnter = () => {
     if (this.currentLocationMarker) {
+      console.log("Removing current location marker");
       this.map.removeLayer(this.currentLocationMarker);
       this.currentLocationMarker = null;
     }

@@ -23,4 +23,6 @@ export class ShowPoiPage {
     this.poi = this.navParams.get("poi");
   }
 
+  goBack = () => this.navCtrl.pop();
+
 }
