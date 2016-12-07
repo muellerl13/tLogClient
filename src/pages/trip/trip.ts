@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams, LoadingController, ActionSheetController} from 'ionic-angular';
-import {Geolocation, Coordinates, ActionSheet} from "ionic-native";
+import {Geolocation, ActionSheet} from "ionic-native";
 import "leaflet";
 import "drmonty-leaflet-awesome-markers/js/leaflet.awesome-markers"
 import {Tlog} from "../../providers/tlog";
