@@ -1,9 +1,6 @@
 /**
- * Created by salho on 05.12.16.
+ * Created by salho on 07.12.16.
  */
-
-// https://www.npmjs.com/package/fs-extra
-
 module.exports = {
   include: [
     {
@@ -41,6 +38,10 @@ module.exports = {
     {
       src: 'node_modules/leaflet/dist/leaflet.css',
       dest: '{{WWW}}/assets/css/leaflet.css'
+    },
+    {
+      src: 'node_modules/leaflet/dist/images',
+      dest: '{{WWW}}/assets/css/images'
     }
   ]
 };

@@ -20,11 +20,12 @@ import {Trip, POI} from "../../models/models";
 })
 export class TripPage {
 
-  center: L.LatLng;
+  defaultLocation:L.LatLng =  new L.LatLng(47.0720698,15.4429915);
+  center:L.LatLng = this.defaultLocation;
   map: L.Map;
   currentLocationMarker: L.Marker;
   markers: L.Marker[];
-  currentMarkerIcon: any;
+  currentLocationIcon: L.AwesomeMarkers.Icon;
   trip: Trip = new Trip();
   path:L.Polyline;
   currentLocationMarkerOptions: L.AwesomeMarkers.IconOptions = {iconUrl: null, icon: "hand-o-down", markerColor: "red"};
@@ -37,8 +38,10 @@ export class TripPage {
               private asCtrl: ActionSheetController
              ) {
     L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
-    this.currentMarkerIcon = L.AwesomeMarkers.icon(this.currentLocationMarkerOptions);
-
+    this.currentLocationIcon = L.AwesomeMarkers.icon({
+      icon: 'hand-o-down',
+      markerColor: 'red'
+    });
   }
 
   presentNewPOIActionSheet = () => {
@@ -74,18 +77,17 @@ export class TripPage {
     return Geolocation.getCurrentPosition()
       .then(pos => {
         this.center = L.latLng(pos.coords.latitude, pos.coords.longitude);
-        if (!this.map) this.initMap();
-        this.map.panTo(this.center);
-        this.currentLocationMarker = this.addCurrentLocationMarker(this.center);
-        this.currentLocationMarker.bindPopup("<h3>You are here</h3><p>You can drag this marker. Press the '+' Icon in the Task Bar to add this POI.</p>").openPopup();
+        this.currentLocationMarker = L.marker(this.center,{icon: this.currentLocationIcon});
+        this.initMap();
         loading.dismiss();
-        //this.presentNewPOIActionSheet();
-        return L.latLng(pos.coords.latitude, pos.coords.longitude);
+        return this.center;
       })
       .catch(err => {
         loading.dismiss();
-        this.showAlert("ERROR", `Could not retrieve your position (${err.message || err})`);
-        return Promise.reject(err);
+        this.center = this.defaultLocation;
+        this.showAlert("INFO","Could not get your position, using a default location instead.");
+        this.currentLocationMarker = L.marker(this.center,{icon: this.currentLocationIcon});
+        this.initMap();
       })
   };
 
@@ -94,22 +96,25 @@ export class TripPage {
 
 
   initMap = () => {
+    if (this.map) this.map.remove();
     if (this.trip.pois.length > 0) this.center = this.poiToLatLng(this.trip.pois[this.trip.pois.length - 1]);
-    if (this.map) this.map.panTo(this.center)
-    else {
-      this.map = L
+    this.map = L
         .map("map")
         .setView(this.center, 13);
-      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map);
-    }
-    if (this.markers) this.markers.forEach(m => this.map.removeLayer(m));
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+    this.map.panTo(this.center);
     this.markers = this.trip.pois.map(poi => this.poiToCoords(poi).bindPopup(poi.name));
     this.path = new L.Polyline(this.markers.map(m=>m.getLatLng()));
     this.map.addLayer(this.path);
     this.markers.forEach(m => m.addTo(this.map));
-
+    if (this.currentLocationMarker) {
+      this.currentLocationMarker.addTo(this.map);
+      this.currentLocationMarker
+        .bindPopup("<h3>You are here</h3><p>You can drag this marker. Press the '+' Icon in the Task Bar to add this POI.</p>")
+        .openPopup();
+    }
 
   };
 
@@ -144,5 +149,72 @@ export class TripPage {
         if (this.trip.pois.length === 0) this.getCurrentLocation(); else this.initMap()
       })
   }
+
+  defaultLocation:L.LatLng =  new L.LatLng(47.0720698,15.4429915);
+  center:L.LatLng = this.defaultLocation;
+  map:L.Map;
+  currentLocationMarker: L.Marker;
+  currentLocationIcon: L.AwesomeMarkers.Icon;
+
+  constructor(
+      public navCtrl: NavController,
+      private tlogService: Tlog,
+      private alertCtrl: AlertController,
+      private navParams: NavParams,
+      private loadingCtrl: LoadingController
+  ) {
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+    this.currentLocationIcon = L.AwesomeMarkers.icon({
+      icon: 'hand-o-down',
+      markerColor: 'red'
+    });
+  }
+
+
+
+
+  showAlert = (title:string,message:string) =>
+    this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
+
+  initMap = () => {
+    if (this.map) this.map.remove();
+    this.map = L.map("map").setView(this.center,13);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+    if (this.currentLocationMarker) {
+      this.currentLocationMarker.addTo(this.map);
+      this.currentLocationMarker.bindPopup("<h4>Your are here!</h4>").openPopup();
+    }
+  };
+
+  ionViewDidLoad() {
+
+  }
+
+  getCurrentPosition = () => {
+    let loader = this.loadingCtrl.create({content: "Trying to determine you current location ...."});
+    loader.present();
+    Geolocation.getCurrentPosition()
+      .then(resp => {
+        loader.dismiss();
+        this.center = new L.LatLng(resp.coords.latitude,resp.coords.longitude);
+        this.currentLocationMarker = L.marker(this.center,{icon: this.currentLocationIcon});
+        this.initMap();
+      })
+      .catch(err => {
+        loader.dismiss();
+        this.center = this.defaultLocation;
+        this.showAlert("INFO","Could not get your position, using a default location instead.");
+        this.currentLocationMarker = L.marker(this.center,{icon: this.currentLocationIcon});
+        this.initMap();
+      })
+  };
+
+  ionViewWillEnter = () =>
+    this.tlogService.loadTrip(this.navParams.get("tripID"))
+      .then(trip => {if (trip.pois.length ===0) this.getCurrentPosition()})
+      .catch(err => this.showAlert("ERROR",`Could not load this Trip (${err})`))
+
 
 }

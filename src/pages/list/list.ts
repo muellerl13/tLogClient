@@ -20,6 +20,7 @@ export class ListPage {
   items: Array<Trip>;
 
 
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private security: Security,
@@ -29,14 +30,13 @@ export class ListPage {
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
-
     this.items = [];
 
   }
 
 
 
-  addTrip = () => this.navCtrl.push(AddTripPage)
+  addTrip = () => this.navCtrl.push(AddTripPage);
 
   showAlert = (title:string,message:string) => this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
 
