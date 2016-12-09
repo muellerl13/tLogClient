@@ -7,14 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>POI Details</ion-title>
+    <ion-title>{{poi.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<h1>{{poi.name}}</h1>
-<p>{{poi.description}}</p>
-  <button ion-button (click)="goBack()">Back</button>
+  <p>{{poi.description}}</p>
+  <ion-card *ngFor="let image of poi.images">
+     <ion-card-content>
+       <img [src]="image.url" >
+      <ion-card-title>
+        {{image.description}}
+      </ion-card-title>
+      <p>
+        by {{image.user}} at {{image.uploaded}}
+      </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

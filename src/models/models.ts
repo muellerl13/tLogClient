@@ -1,3 +1,4 @@
+import {SafeUrl} from "@angular/platform-browser";
 /**
  * Created by salho on 18.11.16.
  */
@@ -7,14 +8,23 @@ export class User {
   email: string;
 }
 
+export interface Image {
+  id: string;
+  descrption?: string;
+  uploaded: string;
+  user: string;
+  url?: SafeUrl;
+}
+
 export class POI {
-  _id?: string
+  _id?: string;
   name: string;
   description: string;
   createdAt: Date;
   loc: {
-    coordinates: [number]
-  }
+    coordinates: number[]
+  };
+  images: Image[];
 }
 
 export class Trip {

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Adding an Image</ion-title>
+    <ion-title>Adding Image to {{poi.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -23,8 +23,11 @@
   <button ion-button (click)="takePhoto()" icon-left>
     <ion-icon name="camera"> </ion-icon> Take Image
   </button>
-  <button ion-button (click)="upload()" [disabled]="!image" icon-left>
+  <button ion-button (click)="selectPicture()" icon-left>
+    <ion-icon name="images"> </ion-icon>Pick Image
+  </button>
+  <button ion-button (click)="upload()" [disabled]="!image" color="dark" icon-left>
     <ion-icon name="cloud-upload"></ion-icon> Save
   </button>
-<img src="{{image}}" />
+<img [src]="image" (show)="image"/>
 </ion-content>

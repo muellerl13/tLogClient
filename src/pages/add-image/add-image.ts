@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {NavController, AlertController, NavParams} from 'ionic-angular';
-import {Camera, Transfer} from "ionic-native";
+import {NavController, AlertController, NavParams, LoadingController} from 'ionic-angular';
+import {Camera, Transfer, CameraOptions} from "ionic-native";
 import {Serverconfig} from "../../providers/serverconfig";
 import {Security} from "../../providers/security";
+import {POI} from "../../models/models";
 
 /*
  Generated class for the AddImage page.
@@ -22,17 +23,28 @@ export class AddImagePage {
     buttons: ['OK']
   }).present();
 
-  description:string;
+  poi: POI;
+
+  description: string;
+
+  takePhotoOptions = {
+    destinationType: Camera.DestinationType.FILE_URI
+  };
+
+  selectPhotoOptions = {
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+    destinationType: Camera.DestinationType.FILE_URI
+  };
 
   upload = () => {
     this.security.getToken()
       .then(token =>
         new Transfer().upload(this.image,
-          `${this.serverconfig.poiURI}/${this.navParams.get("poi")._id}/image`,
-          {params: {description: this.description},headers: {authorization: `Bearer ${token}` } }))
+          `${this.serverconfig.poiURI}/${this.poi._id}/image`,
+          {params: {description: this.description}, headers: {authorization: `Bearer ${token}`}}))
       .then(() => this.navCtrl.pop())
       .catch(err => this.showAlert("ERROR", `Could not upload image (${err.body})`));
-  }
+  };
 
   image: any;
 
@@ -40,16 +52,30 @@ export class AddImagePage {
               private alertCtrl: AlertController,
               private navParams: NavParams,
               private security: Security,
+              private loading: LoadingController,
               private  serverconfig: Serverconfig) {
   }
 
-  takePhoto = () => Camera.getPicture({
-    destinationType: Camera.DestinationType.FILE_URI
-  }).then(imageURI => this.image = imageURI)
-    .catch(err => this.showAlert("ERROR", `Could not take picture (${err})`));
 
-  ionViewDidLoad() {
-    console.log('Hello AddImagePage Page');
+  getPicture = (option:CameraOptions) => () => {
+    let loader = this.loading.create({content: "Uploading Image to TLog-Server"});
+    loader.present();
+    Camera.getPicture().then(imageURI => {
+      this.image = imageURI;
+      loader.dismiss();
+    })
+      .catch(err => {
+        loader.dismiss();
+        this.showAlert("ERROR", `Could not take picture (${err})`)
+      });
+  };
+
+  takePhoto = this.getPicture(this.takePhotoOptions);
+
+  selectPicture = this.getPicture(this.selectPhotoOptions);
+
+  ngOnInit() {
+    this.poi = this.navParams.get("poi");
   }
 
 }

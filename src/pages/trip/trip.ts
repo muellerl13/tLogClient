@@ -28,6 +28,8 @@ export class TripPage {
   currentLocationMarker: L.Marker;
   markers: L.Marker[];
   currentLocationIcon: L.AwesomeMarkers.Icon;
+  pictureIcon: L.AwesomeMarkers.Icon;
+  standardIcon: L.AwesomeMarkers.Icon;
   trip: Trip = new Trip();
   path:L.Polyline;
 
@@ -42,6 +44,14 @@ export class TripPage {
     this.currentLocationIcon = L.AwesomeMarkers.icon({
       icon: 'hand-o-down',
       markerColor: 'red'
+    });
+    this.pictureIcon = L.AwesomeMarkers.icon({
+      icon: "picture-o",
+      markerColor: "blue"
+    });
+    this.standardIcon = L.AwesomeMarkers.icon({
+      icon: "star",
+      markerColor: "blue"
     });
   }
 
@@ -102,9 +112,10 @@ export class TripPage {
     buttons: ['OK']
   }).present();
 
-
   poiToLatLng = (poi: POI) => L.latLng(poi.loc.coordinates[1], poi.loc.coordinates[0]);
-  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi)).on('popupopen',this.onPopupOpen(poi));
+  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi),
+    {icon: (poi.images.length>0)?this.pictureIcon:this.standardIcon})
+    .on('popupopen',this.onPopupOpen(poi));
 
 
   initMap = () => {
@@ -116,7 +127,7 @@ export class TripPage {
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-    this.markers = this.trip.pois.map(poi => this.poiToCoords(poi).bindPopup(poi.name));
+    this.markers = this.trip.pois.map(poi => this.poiToCoords(poi).bindPopup(`<h4>${poi.name}</h4><p>${poi.description}</p>`));
     this.path = new L.Polyline(this.markers.map(m=>m.getLatLng()));
     this.map.addLayer(this.path);
     this.markers.forEach(m => m.addTo(this.map));
