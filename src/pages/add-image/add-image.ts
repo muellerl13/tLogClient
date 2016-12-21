@@ -37,16 +37,18 @@ export class AddImagePage {
   };
 
   upload = () => {
+    let loader = this.loading.create({content: "Uploading Image to TLog-Server"});
+    loader.present();
     this.security.getToken()
       .then(token =>
         new Transfer().upload(this.image,
           `${this.serverconfig.poiURI}/${this.poi._id}/image`,
           {params: {description: this.description}, headers: {authorization: `Bearer ${token}`}}))
-      .then(() => this.navCtrl.pop())
-      .catch(err => this.showAlert("ERROR", `Could not upload image (${err.body})`));
+      .then(() => {loader.dismiss();this.navCtrl.pop()})
+      .catch(err => {loader.dismiss();this.showAlert("ERROR", `Could not upload image (${err.body})`)});
   };
 
-  image: any;
+  image: any = null;
 
   constructor(public navCtrl: NavController,
               private alertCtrl: AlertController,
@@ -58,14 +60,10 @@ export class AddImagePage {
 
 
   getPicture = (option:CameraOptions) => () => {
-    let loader = this.loading.create({content: "Uploading Image to TLog-Server"});
-    loader.present();
     Camera.getPicture().then(imageURI => {
       this.image = imageURI;
-      loader.dismiss();
     })
       .catch(err => {
-        loader.dismiss();
         this.showAlert("ERROR", `Could not take picture (${err})`)
       });
   };

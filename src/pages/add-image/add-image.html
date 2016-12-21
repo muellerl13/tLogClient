@@ -29,5 +29,7 @@
   <button ion-button (click)="upload()" [disabled]="!image" color="dark" icon-left>
     <ion-icon name="cloud-upload"></ion-icon> Save
   </button>
-<img [src]="image" (show)="image"/>
+<ion-card *ngIf="image">
+<img [src]="image" />
+</ion-card>
 </ion-content>
