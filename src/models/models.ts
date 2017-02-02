@@ -25,6 +25,7 @@ export class POI {
     coordinates: number[]
   };
   images: Image[];
+  tags?: string;
 }
 
 export class Trip {

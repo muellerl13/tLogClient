@@ -72,12 +72,6 @@
     "cordova-plugin-file-transfer"
   ],
   "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
   ],
   "description": "tLogClient: An Ionic project",
   "config": {

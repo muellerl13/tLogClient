@@ -1,0 +1,28 @@
+<!--
+  Generated template for the ListPOI page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>My POIs</ion-title>
+
+    </ion-navbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item._id)">
+      <i class="fa fa-map-signs" aria-hidden="true"></i>
+      {{item.name}}
+
+    </button>
+  </ion-list>
+</ion-content>

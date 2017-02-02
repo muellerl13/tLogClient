@@ -1,0 +1,59 @@
+import { Component } from '@angular/core';
+import {NavController,NavParams, LoadingController, AlertController} from 'ionic-angular';
+import {Tlog} from "../../providers/tlog";
+import {POI} from "../../models/models";
+import {LoginPage} from "../login/login";
+import {Security} from "../../providers/security";
+
+/*
+  Generated class for the ListPOI page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+*/
+@Component({
+  selector: 'page-list-poi',
+  templateUrl: 'list-poi.html'
+})
+export class ListPOIPage {
+
+  selectedItem: any;
+  items: Array<POI>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tLogService: Tlog,
+              private alertCtrl: AlertController, private security: Security,
+              private loadingCtrl: LoadingController) {
+    this.selectedItem = navParams.get('item');
+    this.items = [];
+  }
+
+  ionViewDidLoad() {
+  }
+
+  loadPOIs = () => {
+    const loading = this.loadingCtrl.create({
+      content: "Fetching your POIs"
+    });
+    loading.present()
+      .then(this.tLogService.getPois)
+      .then(pois => this.items = pois).then(() => {
+      loading.dismiss();
+    })
+      .catch(err => {
+        loading.dismiss();
+        this.showAlert("Error", `Could not retrieve list of trips: ${err.message || err}`);
+      });
+  }
+
+  showAlert = (title: string, message: string) => this.alertCtrl.create({
+    title: title,
+    message: message,
+    buttons: ['OK']
+  }).present();
+
+  ionViewWillEnter = () => {
+    this.security.isNotloggedIn().then(exp => {
+      if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
+    });
+  }
+}
