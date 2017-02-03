@@ -4,6 +4,7 @@ import {Tlog} from "../../providers/tlog";
 import {POI} from "../../models/models";
 import {LoginPage} from "../login/login";
 import {Security} from "../../providers/security";
+import {ShowPoiPage} from "../show-poi/show-poi";
 
 /*
   Generated class for the ListPOI page.
@@ -19,15 +20,29 @@ export class ListPOIPage {
 
   selectedItem: any;
   items: Array<POI>;
+  poisSearched: Array<POI>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private tLogService: Tlog,
               private alertCtrl: AlertController, private security: Security,
               private loadingCtrl: LoadingController) {
+
     this.selectedItem = navParams.get('item');
     this.items = [];
+    this.poisSearched = [];
   }
 
   ionViewDidLoad() {
+  }
+
+  getSearchedPOIs(ev:any){
+    this.poisSearched = this.items;
+    let valueSearchbar = ev.target.value;
+    if (valueSearchbar && valueSearchbar.trim() != '') {
+      this.poisSearched = this.poisSearched.filter((items) => {
+        return (items.name.toLowerCase().indexOf(valueSearchbar.toLocaleLowerCase()) > -1);
+      })
+    }
+
   }
 
   loadPOIs = () => {
@@ -35,7 +50,7 @@ export class ListPOIPage {
       content: "Fetching your POIs"
     });
     loading.present()
-      .then(this.tLogService.getPois)
+      .then(this.tLogService.getMyPois)
       .then(pois => this.items = pois).then(() => {
       loading.dismiss();
     })
@@ -55,5 +70,13 @@ export class ListPOIPage {
     this.security.isNotloggedIn().then(exp => {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
     });
+  }
+
+  showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
+    poi:poi
+  });
+
+  itemTapped(event, poi) {
+    this.showPoi(poi);
   }
 }

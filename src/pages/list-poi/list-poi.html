@@ -18,8 +18,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar (ionInput)="getSearchedPOIs($event)"></ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item._id)">
+    <button ion-item *ngFor="let item of poisSearched" (click)="itemTapped($event, item._id)">
       <i class="fa fa-map-signs" aria-hidden="true"></i>
       {{item.name}}
 
