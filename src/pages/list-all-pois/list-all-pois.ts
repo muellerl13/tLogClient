@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import {NavController,NavParams, LoadingController, AlertController} from 'ionic-angular';
-import {Tlog} from "../../providers/tlog";
-import {POI} from "../../models/models";
+import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import {LoginPage} from "../login/login";
+import {POI} from "../../models/models";
 import {Security} from "../../providers/security";
-import {ShowPoiPage} from "../show-poi/show-poi";
+import {Tlog} from "../../providers/tlog";
 
 /*
-  Generated class for the ListPOI page.
+  Generated class for the ListAllPois page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-list-poi',
-  templateUrl: 'list-poi.html'
+  selector: 'page-list-all-pois',
+  templateUrl: 'list-all-pois.html'
 })
-export class ListPOIPage {
+export class ListAllPoisPage {
 
   selectedItem: any;
   items: Array<POI>;
@@ -42,7 +41,6 @@ export class ListPOIPage {
         return (items.name.toLowerCase().indexOf(valueSearchbar.toLocaleLowerCase()) > -1);
       })
     }
-
   }
 
   loadPOIs = () => {
@@ -50,7 +48,7 @@ export class ListPOIPage {
       content: "Fetching your POIs"
     });
     loading.present()
-      .then(this.tLogService.getMyPois)
+      .then(this.tLogService.getAllPois)
       .then(pois => this.items = pois).then(() => {
       loading.dismiss();
     })
@@ -70,13 +68,5 @@ export class ListPOIPage {
     this.security.isNotloggedIn().then(exp => {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
     });
-  }
-
-  showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
-    poi:poi
-  });
-
-  itemTapped(event, poi) {
-    this.showPoi(poi);
   }
 }
