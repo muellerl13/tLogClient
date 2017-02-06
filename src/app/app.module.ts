@@ -22,6 +22,7 @@ import {ListPOIPage} from "../pages/list-poi/list-poi";
 import {ListAllPoisPage} from "../pages/list-all-pois/list-all-pois";
 
 
+
 let storage = new Storage();
 
 export function getAuthHttp(http) {

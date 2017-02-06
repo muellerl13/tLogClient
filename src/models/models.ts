@@ -24,7 +24,7 @@ export class POI {
   loc: {
     coordinates: number[]
   };
-  images: Image[];
+  images?: Image[];
   tags?: string;
 }
 

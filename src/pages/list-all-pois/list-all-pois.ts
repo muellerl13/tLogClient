@@ -56,7 +56,7 @@ export class ListAllPoisPage {
         loading.dismiss();
         this.showAlert("Error", `Could not retrieve list of trips: ${err.message || err}`);
       });
-  }
+  };
 
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,

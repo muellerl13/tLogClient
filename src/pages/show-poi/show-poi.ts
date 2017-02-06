@@ -4,6 +4,7 @@ import {POI} from "../../models/models";
 import {Serverconfig} from "../../providers/serverconfig";
 import {Tlog} from "../../providers/tlog";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ListPage} from "../list/list";
 
 
 /*
@@ -37,10 +38,12 @@ export class ShowPoiPage {
 
   ngOnInit() {
     this.poi = this.navParams.get("poi");
-    this.poi.images.forEach(img => img.uploaded = new Date(img.uploaded).toLocaleString());
-    this.getImages();
+    if(!this.poi.images == undefined){
+      this.poi.images.forEach(img => img.uploaded = new Date(img.uploaded).toLocaleString());
+      this.getImages();
+    }
   }
 
-  goBack = () => this.navCtrl.pop();
+  goBack = () => this.navCtrl.push(ListPage);
 
 }
