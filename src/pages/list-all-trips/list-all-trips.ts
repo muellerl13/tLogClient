@@ -36,6 +36,24 @@ export class ListAllTripsPage {
   ionViewDidLoad() {
   }
 
+  save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID,liked)
+    .then(
+      trip => console.log("save worked and this is trip :"+trip)
+    )
+    .catch(
+      err => this.showAlert("ERROR",`${err.json().message}`)
+    );
+
+  like(tripID,liked){
+    console.log("oh you like )" +tripID + liked);
+    this.save(tripID,liked);
+  }
+
+  dislike(tripID,liked){
+    console.log("oh you don't like )" +tripID + liked);
+    this.save(tripID,liked);
+  }
+
   addTrip = () => this.navCtrl.push(AddTripPage);
 
   showAlert = (title: string, message: string) => this.alertCtrl.create({
@@ -60,13 +78,13 @@ export class ListAllTripsPage {
         loading.dismiss();
         this.showAlert("Error", `Could not retrieve list of trips: ${err.message || err}`);
       });
-  }
+  };
 
   ionViewWillEnter = () => {
     this.security.isNotloggedIn().then(exp => {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()
     });
-  }
+  };
 
   itemTapped(event, tripID) {
     this.navCtrl.push(TripPage, {
