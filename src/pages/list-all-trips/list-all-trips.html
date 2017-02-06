@@ -22,7 +22,7 @@
         <div id="div1">
           <button ion-item (click)="itemTapped($event, item._id)">
             <i class="fa ion-ios-happy" style="color: greenyellow" aria-hidden="true"></i>
-            {{item.name }}
+            {{item.name }} created by {{item.creator.username}}
           </button>
         </div>
         <div id="div2">
