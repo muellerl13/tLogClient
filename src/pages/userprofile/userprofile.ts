@@ -39,7 +39,6 @@ export class UserprofilePage {
 
     this.security.getUser()
       .then((rUser)=> {
-        alert(JSON.stringify(rUser));
         this.user = rUser
       })
       .catch((err) => {
@@ -116,6 +115,12 @@ export class UserprofilePage {
   save = () => {
 
     console.log("In save function!");
+    if(this.registerForm.value.username!=null&&this.registerForm.value.username!=undefined){
+      this.user.username = this.registerForm.value.username;
+    }
+    if(this.registerForm.value.email!=null&&this.registerForm.value.username!=undefined){
+      this.user.email = this.registerForm.value.email;
+    }
     this.mode = "edit";
     this.tlog.updateUser(this.user.id, this.user);
   }
