@@ -27,9 +27,11 @@ export class TripPage {
   map: L.Map;
   currentLocationMarker: L.Marker;
   markers: L.Marker[];
-  //currentLocationIcon: L.AwesomeMarkers.Icon;
-  //pictureIcon: L.AwesomeMarkers.Icon;
-  //standardIcon: L.AwesomeMarkers.Icon;
+  /*
+   currentLocationIcon: L.AwesomeMarkers.Icon;
+   pictureIcon: L.AwesomeMarkers.Icon;
+   standardIcon: L.AwesomeMarkers.Icon;
+   */
   trip: Trip = new Trip();
   path:L.Polyline;
 
@@ -39,21 +41,21 @@ export class TripPage {
               private loadingCtrl: LoadingController,
               private tlog: Tlog,
               private asCtrl: ActionSheetController
-             ) {
-    /*
-    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
-    this.currentLocationIcon = L.AwesomeMarkers.icon({
-      icon: 'hand-o-down',
-      markerColor: 'red'
-    });
-    this.pictureIcon = L.AwesomeMarkers.icon({
-      icon: "picture-o",
-      markerColor: "blue"
-    });
-    this.standardIcon = L.AwesomeMarkers.icon({
-      icon: "star",
-      markerColor: "blue"
-    });*/
+  ) {
+    /* L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+     this.currentLocationIcon = L.AwesomeMarkers.icon({
+     icon: 'hand-o-down',
+     markerColor: 'red'
+     });
+     this.pictureIcon = L.AwesomeMarkers.icon({
+     icon: "picture-o",
+     markerColor: "blue"
+     });
+     this.standardIcon = L.AwesomeMarkers.icon({
+     icon: "star",
+     markerColor: "blue"
+     });
+     */
   }
 
   presentPOIActionSheet = (poi:POI):ActionSheet =>
@@ -114,8 +116,11 @@ export class TripPage {
   }).present();
 
   poiToLatLng = (poi: POI) => L.latLng(poi.loc.coordinates[1], poi.loc.coordinates[0]);
-  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi),
-    {icon: (poi.images.length>0)})
+  poiToCoords = (poi: POI) => L.marker(this.poiToLatLng(poi)
+    /*,
+     {icon: (poi.images.length>0)?this.pictureIcon:this.standardIcon}
+     */
+  )
     .on('popupopen',this.onPopupOpen(poi));
 
 
@@ -123,8 +128,8 @@ export class TripPage {
     if (this.map) this.map.remove();
     if (this.trip.pois.length > 0) this.center = this.poiToLatLng(this.trip.pois[this.trip.pois.length - 1]);
     this.map = L
-        .map("map")
-        .setView(this.center, 13);
+      .map("map")
+      .setView(this.center, 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
@@ -136,7 +141,10 @@ export class TripPage {
 
   addCurrentLocationMarker = (pos: L.LatLng) => {
     if (!this.map) this.initMap();
-    this.currentLocationMarker = L.marker(pos, {draggable: true})
+    this.currentLocationMarker = L.marker(pos, {draggable: true
+      /*,
+       icon: this.currentLocationIcon
+       */})
       .bindPopup("<h3>You are here</h3><p>You can drag this marker. Press the '+' Icon in the Task Bar to add this POI.</p>")
       .addTo(this.map);
     this.currentLocationMarker.openPopup()

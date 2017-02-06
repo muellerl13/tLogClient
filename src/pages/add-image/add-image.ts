@@ -60,7 +60,7 @@ export class AddImagePage {
 
 
   getPicture = (option:CameraOptions) => () => {
-    Camera.getPicture().then(imageURI => {
+    Camera.getPicture(option).then(imageURI => {
       this.image = imageURI;
     })
       .catch(err => {

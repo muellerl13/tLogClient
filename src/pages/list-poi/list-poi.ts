@@ -8,6 +8,7 @@ import {LoginPage} from "../login/login";
 import {Security} from "../../providers/security";
 import {ShowPoiPage} from "../show-poi/show-poi";
 import {AddPoiPage} from "../add-poi/add-poi";
+import {EditImagePage} from "../edit-image/edit-image";
 
 /*
   Generated class for the ListPOI page.
@@ -82,7 +83,11 @@ export class ListPOIPage {
 
   editPoi = (poi) => this.navCtrl.push(AddPoiPage,{
     poi:poi
-  })
+  });
+
+  editImagePoi = (poi) => this.navCtrl.push(EditImagePage,{
+    poi:poi
+  });
 
   itemTapped(event, poi) {
     this.presentPOIActionSheet(poi).present();
@@ -114,6 +119,12 @@ export class ListPOIPage {
           text: 'Edit POI',
           handler: () => {
             this.editPoi(poi);
+          }
+        },
+        {
+          text: 'Edit Image from POI',
+          handler: () => {
+            this.editImagePoi(poi);
           }
         },
         {

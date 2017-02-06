@@ -22,6 +22,7 @@ import {ListPOIPage} from "../pages/list-poi/list-poi";
 import {ListAllPoisPage} from "../pages/list-all-pois/list-all-pois";
 import {UserprofilePage} from "../pages/userprofile/userprofile";
 import {ListAllTripsPage} from "../pages/list-all-trips/list-all-trips";
+import {EditImagePage} from "../pages/edit-image/edit-image";
 
 
 
@@ -52,7 +53,8 @@ export function getAuthHttp(http) {
     ListPOIPage,
     ListAllPoisPage,
     UserprofilePage,
-    ListAllTripsPage
+    ListAllTripsPage,
+    EditImagePage
   ],
   imports: [
     IonicModule.forRoot(MyApp), ReactiveFormsModule
@@ -73,7 +75,8 @@ export function getAuthHttp(http) {
     ListPOIPage,
     ListAllPoisPage,
     UserprofilePage,
-    ListAllTripsPage
+    ListAllTripsPage,
+    EditImagePage
   ],
   providers: [Security,
     {
