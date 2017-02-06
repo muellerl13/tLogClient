@@ -121,6 +121,9 @@ export class UserprofilePage {
     if(this.registerForm.value.email!=null&&this.registerForm.value.username!=undefined){
       this.user.email = this.registerForm.value.email;
     }
+    if(this.registerForm.value.password!=null&&this.registerForm.value.password!=undefined){
+      this.user.password = this.registerForm.value.password;
+    }
     this.mode = "edit";
     this.tlog.updateUser(this.user.id, this.user);
   }
