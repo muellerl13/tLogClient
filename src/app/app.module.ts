@@ -22,6 +22,7 @@ import {ListPOIPage} from "../pages/list-poi/list-poi";
 import {ListAllPoisPage} from "../pages/list-all-pois/list-all-pois";
 import {UserprofilePage} from "../pages/userprofile/userprofile";
 import {ListAllTripsPage} from "../pages/list-all-trips/list-all-trips";
+import {LogoutPage} from "../pages/logout/logout";
 
 
 
@@ -43,6 +44,7 @@ export function getAuthHttp(http) {
     ItemDetailsPage,
     ListPage,
     LoginPage,
+    LogoutPage,
     RegisterPage,
     AddTripPage,
     TripPage,
@@ -64,6 +66,7 @@ export function getAuthHttp(http) {
     ItemDetailsPage,
     ListPage,
     LoginPage,
+    LogoutPage,
     RegisterPage,
     AddTripPage,
     TripPage,
