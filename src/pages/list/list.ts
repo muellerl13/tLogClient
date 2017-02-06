@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
-import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {
+  NavController, NavParams, AlertController, LoadingController, ActionSheet,
+  ActionSheetController
+} from 'ionic-angular';
 
 import {Security} from '../../providers/security';
 import {LoginPage} from "../login/login";
@@ -26,7 +29,8 @@ export class ListPage {
               private security: Security,
               private tLogService: Tlog,
               private alertCtrl: AlertController,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private asCtrl: ActionSheetController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.items = [];
@@ -65,9 +69,45 @@ export class ListPage {
     });
   }
 
+  showTrip = (tripID) => this.navCtrl.push(TripPage,{
+    trip:tripID
+  });
+
+  editTrip = (tripID) => {};
+
+  deleteTrip = (tripID) => {};
+
   itemTapped(event, tripID) {
-    this.navCtrl.push(TripPage, {
-      trip: tripID
-    });
+    this.presentTripActionSheet(tripID).present();
   }
+
+  presentTripActionSheet = (tripID):ActionSheet =>
+    this.asCtrl.create({
+      buttons: [
+        {
+          text: 'Show Details',
+          handler: () => {
+            this.showTrip(tripID);
+          }
+        },
+        {
+          text: 'Edit Trip',
+          handler: () => {
+            this.editTrip(tripID);
+          }
+        },
+        {
+          text: 'Delete Trip',
+          handler: () => {
+            this.deleteTrip(tripID);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    })
 }
