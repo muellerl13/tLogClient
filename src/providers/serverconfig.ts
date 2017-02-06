@@ -16,6 +16,7 @@ export class Serverconfig {
   private _mineURI = `${this._host}/trip/mine`;
   private _tripURI = `${this._host}/trip`;
   private _poiURI = `${this.host}/poi`;
+  private _userURI = `${this.host}/user`;
   private _ownPoiURI = `${this.host}/poi/mine`;
   private _allPoisURI = `${this.host}/poi`;
 
@@ -25,6 +26,7 @@ export class Serverconfig {
   public get mineURI() {return this._mineURI};
   public get tripURI () {return this._tripURI};
   public get poiURI() {return this._poiURI};
+  public get userURI() {return this._userURI};
   public get ownPoiURI(){return this._ownPoiURI};
   public get allPoisURI(){return this._allPoisURI};
 
