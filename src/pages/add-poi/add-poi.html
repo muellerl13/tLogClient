@@ -29,5 +29,6 @@
       </ion-item>
     </ion-list>
     <button (click)="save()"  ion-button [disabled]="!poiForm.valid">Save</button>
+    <button (click)="deletePoi()"  ion-button color="danger" [disabled]="!poiForm.valid">Delete</button>
   </form>
 </ion-content>

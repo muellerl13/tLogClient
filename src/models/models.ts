@@ -38,4 +38,5 @@ export class Trip {
   createdAt?: Date;
   creator?: {username: {local: string}};
   pois?:[POI];
+  like:Boolean;
 }

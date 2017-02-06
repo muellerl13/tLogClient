@@ -19,6 +19,7 @@ export class Serverconfig {
   private _userURI = `${this.host}/user`;
   private _ownPoiURI = `${this.host}/poi/mine`;
   private _allPoisURI = `${this.host}/poi`;
+  private _deletePOI = `${this.host}/poi`;
 
   public get host():string {return this._host};
   public get loginURI():string {return this._loginURI};
@@ -29,6 +30,7 @@ export class Serverconfig {
   public get userURI() {return this._userURI};
   public get ownPoiURI(){return this._ownPoiURI};
   public get allPoisURI(){return this._allPoisURI};
+  public get deletePOI(){return this._deletePOI};
 
   constructor() {
   }

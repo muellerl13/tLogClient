@@ -63,6 +63,7 @@ export class ListPOIPage {
       });
   };
 
+
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,
     message: message,
@@ -87,6 +88,18 @@ export class ListPOIPage {
     this.presentPOIActionSheet(poi).present();
   }
 
+  deletePoi = (poi:POI)  => {
+    console.log("Deleting POI");
+    this.tLogService.deletePoi(poi)
+      .then(deletedPoi => {
+        this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
+        this.navCtrl.pop();
+      })
+      .catch(err => {
+        this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
+      })
+  }
+
   presentPOIActionSheet = (poi:POI):ActionSheet =>
     this.asCtrl.create({
       //title: 'Modify your album',
@@ -101,6 +114,12 @@ export class ListPOIPage {
           text: 'Edit POI',
           handler: () => {
             this.editPoi(poi);
+          }
+        },
+        {
+          text: 'Delete POI',
+          handler: () => {
+            this.deletePoi(poi);
           }
         },{
           text: 'Cancel',

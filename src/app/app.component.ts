@@ -9,6 +9,7 @@ import {LoginPage} from "../pages/login/login";
 import {ListPOIPage} from "../pages/list-poi/list-poi";
 import {ListAllPoisPage} from "../pages/list-all-pois/list-all-pois";
 import {UserprofilePage} from "../pages/userprofile/userprofile";
+import {ListAllTripsPage} from "../pages/list-all-trips/list-all-trips";
 
 
 
@@ -32,6 +33,7 @@ export class MyApp {
     this.pages = [
       { title: 'Login', component: LoginPage },
       { title: 'My Trips', component: ListPage },
+      { title: 'All Trips', component: ListAllTripsPage },
       { title: 'My POIs', component: ListPOIPage },
       { title: 'All POIs', component: ListAllPoisPage },
       { title: 'User Profile', component: UserprofilePage}

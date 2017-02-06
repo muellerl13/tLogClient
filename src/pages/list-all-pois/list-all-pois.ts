@@ -45,7 +45,7 @@ export class ListAllPoisPage {
 
   loadPOIs = () => {
     const loading = this.loadingCtrl.create({
-      content: "Fetching your POIs"
+      content: "Fetching POIs"
     });
     loading.present()
       .then(this.tLogService.getAllPois)

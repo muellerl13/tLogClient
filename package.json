@@ -27,6 +27,7 @@
     "angular2-jwt": "^0.1.25",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
     "es6-promise": "^4.0.5",
+    "fabric": "^1.7.3",
     "font-awesome": "^4.7.0",
     "ionic-angular": "2.0.0-rc.2",
     "ionic-native": "2.2.3",
@@ -71,8 +72,7 @@
     "cordova-plugin-camera",
     "cordova-plugin-file-transfer"
   ],
-  "cordovaPlatforms": [
-  ],
+  "cordovaPlatforms": [],
   "description": "tLogClient: An Ionic project",
   "config": {
     "ionic_sass": "./config/sass.config.js",

@@ -114,5 +114,18 @@ export class AddPoiPage {
   };
 
 
+  deletePoi = ()  => {
+    console.log("Deleting POI");
+    const poi = this.poiForm.value;
+    poi._id = this.poi._id;
+    this.tLogService.deletePoi(poi)
+      .then(deletedPoi => {
+        this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
+        this.navCtrl.pop();
+      })
+      .catch(err => {
+        this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
+      })
+  }
 
 }
