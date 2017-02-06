@@ -42,7 +42,10 @@ export class Security {
     this.storage.set('user',new JwtHelper().decodeToken(token))]).then(()=>true)
 
 
-
+  logout = () => {
+    this.storage.remove('id_token');
+    this.storage.remove('user');
+  }
 
   login = (username: string, password:string):Promise<boolean> => {
     let headers = new Headers();
