@@ -23,6 +23,7 @@ import {ListAllPoisPage} from "../pages/list-all-pois/list-all-pois";
 import {UserprofilePage} from "../pages/userprofile/userprofile";
 
 
+
 let storage = new Storage();
 
 export function getAuthHttp(http) {
