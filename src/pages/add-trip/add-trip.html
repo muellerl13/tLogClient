@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Add a new Trip</ion-title>
+    <ion-title>{{trip.name || "New Trip"}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -46,5 +46,6 @@
       </ion-item>
     </ion-list>
     <button (click)="save()"  ion-button [disabled]="!tripForm.valid">Save</button>
+    <button (click)="deleteTrip()"  ion-button color="danger" [disabled]="!tripForm.valid">Delete</button>
   </form>
 </ion-content>
