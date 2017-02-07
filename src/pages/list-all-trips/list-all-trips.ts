@@ -49,7 +49,10 @@ export class ListAllTripsPage {
 
   save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID)
     .then(
-      trip => console.log("save worked and this is trip :"+trip.name+" "+liked)
+      trip => {console.log("save worked and this is trip :"+trip.name+" "+liked)
+               let index = this.tripsSearched.map(tripR=>tripR._id).indexOf(trip._id);
+               this.tripsSearched[index] = trip;
+      }
     )
     .catch(
       err => this.showAlert("ERROR",`${err.json().message}`)
@@ -65,14 +68,13 @@ export class ListAllTripsPage {
     }
   }
 
-  like(tripID,liked){
-    console.log("oh you like )" +tripID + liked);
-    this.save(tripID,liked);
-  }
-
-  dislike(tripID,liked){
-    console.log("oh you don't like )" +tripID + liked);
-    this.save(tripID,liked);
+  likeTrip(tripId,liked){
+    if(liked == true){
+      liked = false;
+    }else if(liked == false){
+      liked = true;
+    }
+    this.save(tripId, liked);
   }
 
   addComment = (tripID) => this.navCtrl.push(AddCommentPage, {tripID: tripID});
