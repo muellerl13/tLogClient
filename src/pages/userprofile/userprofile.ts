@@ -5,6 +5,7 @@ import {Serverconfig} from "../../providers/serverconfig";
 import {Tlog} from "../../providers/tlog";
 import {User} from "../../models/models";
 import {Security} from "../../providers/security";
+import {LogoutPage} from "../logout/logout";
 
 /*
   Generated class for the Userprofile page.
@@ -118,14 +119,15 @@ export class UserprofilePage {
     if(this.registerForm.value.username!=null&&this.registerForm.value.username!=undefined){
       this.user.username = this.registerForm.value.username;
     }
-    if(this.registerForm.value.email!=null&&this.registerForm.value.username!=undefined){
+    if(this.registerForm.value.email!=null&&this.registerForm.value.email!=undefined){
       this.user.email = this.registerForm.value.email;
     }
     if(this.registerForm.value.password!=null&&this.registerForm.value.password!=undefined){
       this.user.password = this.registerForm.value.password;
     }
     this.mode = "edit";
-    this.tlog.updateUser(this.user.id, this.user);
+    this.tlog.updateUser(this.user.id, this.user)
+      .then(() => this.navCtrl.push(LogoutPage));
   }
 
 }
