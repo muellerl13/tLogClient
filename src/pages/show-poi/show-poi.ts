@@ -38,12 +38,10 @@ export class ShowPoiPage {
 
   ngOnInit() {
     this.poi = this.navParams.get("poi");
-    if(!this.poi.images == undefined){
-      this.poi.images.forEach(img => img.uploaded = new Date(img.uploaded).toLocaleString());
-      this.getImages();
-    }
+    this.poi.images.forEach(img => img.uploaded = new Date(img.uploaded).toLocaleString());
+    this.getImages();
   }
 
-  goBack = () => this.navCtrl.push(ListPage);
+  goBack = () => this.navCtrl.pop();
 
 }
