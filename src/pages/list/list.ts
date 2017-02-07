@@ -81,7 +81,7 @@ export class ListPage {
     this.tLogService.loadTrip(tripID).then(trip => this.tLogService.deleteTrip(trip))
       .then(deletedTrip => {
         this.showAlert("Delete",`${deletedTrip.name} was successfully deleted`);
-        this.navCtrl.pop();
+        this.loadTrips();
       })
       .catch(err => {
         this.showAlert("Error", `Could not delete Trip: ${err.json().message}`)

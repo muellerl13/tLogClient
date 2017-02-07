@@ -55,6 +55,7 @@ export class ListPOIPage {
     loading.present()
       .then(this.tLogService.getMyPois)
       .then(pois => this.items = pois).then(() => {
+      this.poisSearched = this.items;
       loading.dismiss();
     })
       .catch(err => {
@@ -71,7 +72,7 @@ export class ListPOIPage {
 
   ionViewWillEnter = () => {
     this.security.isNotloggedIn().then(exp => {
-      if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
+      if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs();
     });
   };
 
@@ -95,11 +96,11 @@ export class ListPOIPage {
     console.log("Deleting POI");
     this.tLogService.deletePoi(poi)
       .then(deletedPoi => {
-        this.navCtrl.push(ListPOIPage);
+        this.loadPOIs();
         this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
       })
       .catch(err => {
-        this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
+        this.showAlert("Error", `Could not delete POI: ${err.json().message}`)
       })
   }
 
