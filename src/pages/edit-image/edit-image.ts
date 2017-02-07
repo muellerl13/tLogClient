@@ -46,13 +46,28 @@ export class EditImagePage {
     buttons: ['OK']
   }).present();
 
-  filterGray = () => {
-    this.tLogService.filterImage(this.poi._id, "gray", this.poi.images[0].id)
+  filterGray = (imageId) => {
+    this.tLogService.filterImage(this.poi._id, "gray", imageId)
       .then((res) =>
         this.navCtrl.push(ShowPoiPage,{
         poi:res
       }))
       .catch(err => this.showAlert("ERROR: Could not filter Image", err))
+  };
+
+  filterSepia = (imageId) => {
+    this.tLogService.filterImage(this.poi._id, "sepia", imageId)
+      .then((res) =>
+        this.navCtrl.push(ShowPoiPage,{
+          poi:res
+        }))
+      .catch(err => this.showAlert("ERROR: Could not filter Image", err))
+  };
+
+  deleteImage = (imageId:String) => {
+    this.tLogService.deleteImage(imageId,this.poi).then((res) => this.navCtrl.push(ShowPoiPage,{
+      poi:res
+    }))
   }
 
 }

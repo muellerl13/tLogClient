@@ -24,9 +24,12 @@
         by {{image.user}} at {{image.uploaded}}
       </p>
     </ion-card-content>
+    <p>Apply a filter:</p>
+    <ion-list radio-group [(ngModel)]="filter">
+      <button (click)="filterGray(image.id)"  ion-button color="light">GrayScale</button>
+      <button (click)="filterSepia(image.id)"  ion-button color=#704214>Sepia</button>
+    </ion-list>
+    <button (click)="deleteImage(image.id)"  ion-button color="danger">Delete</button>
   </ion-card>
-  <p>Apply a filter:</p>
-  <ion-list radio-group [(ngModel)]="filter">
-    <button (click)="filterGray()"  ion-button color="light">GrayScale</button>
-  </ion-list>
+
 </ion-content>
