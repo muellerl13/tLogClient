@@ -70,11 +70,6 @@ export class TripPage {
           }
         },
         {
-          text: 'Edit POI',
-          handler: () => {
-            this.editPOI(poi);
-          }
-        },{
           text: 'Add Image',
           handler: () => {
             this.addImage(poi);
@@ -84,12 +79,6 @@ export class TripPage {
           text: 'Edit Image from POI',
           handler: () => {
             this.editImagePoi(poi);
-          }
-        },
-        {
-          text: 'Delete POI',
-          handler: () => {
-            this.deletePoi(poi);
           }
         },
         {
@@ -178,17 +167,6 @@ export class TripPage {
     this.presentPOIActionSheet(poi);
   };
 
-
-  editPOI = (poi:POI) => {
-    console.log("About to edit POI " + JSON.stringify(poi));
-    this.navCtrl.push(AddPoiPage,
-      {
-        poi: poi,
-        tripID: this.trip._id,
-        coordinates: {lng: poi.loc.coordinates[0], lat:poi.loc.coordinates[1]}
-      });
-  };
-
   showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
     poi:poi
   });
@@ -197,19 +175,7 @@ export class TripPage {
 
   editImagePoi = (poi) => this.navCtrl.push(EditImagePage,{
     poi:poi
-  });
-
-  deletePoi = (poi:POI)  => {
-    console.log("Deleting POI");
-    this.tlog.deletePoi(poi)
-      .then(deletedPoi => {
-        this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
-        this.navCtrl.pop();
-      })
-      .catch(err => {
-        this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
-      })
-  }
+  })
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {
