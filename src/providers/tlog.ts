@@ -30,6 +30,10 @@ export class Tlog {
     this.authHttp.patch(`${this.serverconfig.tripURI}/${tripID}/like`,trip)
       .toPromise().then(res =>res.json());
 
+  commentOnTrip = (trip: Trip, user:User) : Promise<Trip> =>
+    this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}/comment`,{"trip":trip, "user":user})
+      .toPromise().then(res =>res.json());
+
   filterImage = (poiId, filterType, imageId):Promise<POI> => this.authHttp.patch(`${this.serverconfig.poiURI}/${poiId}/filterImage`,{"filterType":filterType,"imageId":imageId}).toPromise().then((res) => res.json());
 
   deleteImage = (imageId, poi:POI):Promise<POI> => this.authHttp.delete(`${this.serverconfig.poiURI}/${poi._id}/image/${imageId}`).toPromise().then((res) => res.json());
