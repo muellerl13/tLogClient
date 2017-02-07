@@ -27,7 +27,9 @@
     <p>Apply a filter:</p>
     <ion-list radio-group [(ngModel)]="filter">
       <button (click)="filterGray(image.id)"  ion-button color="light">GrayScale</button>
-      <button (click)="filterSepia(image.id)"  ion-button color=#704214>Sepia</button>
+      <button (click)="filterSepia(image.id)"  ion-button color="dark">Sepia</button>
+      <button (click)="filterWarm(image.id)"  ion-button color="danger">Warm</button>
+      <button (click)="filterCold(image.id)"  ion-button color="default">Cold</button>
     </ion-list>
     <button (click)="deleteImage(image.id)"  ion-button color="danger">Delete</button>
   </ion-card>

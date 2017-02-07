@@ -7,6 +7,7 @@ import {Trip, User} from "../../models/models";
 import {Trip} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
 
+
 /*
   Generated class for the ListAllTrips page.
 
