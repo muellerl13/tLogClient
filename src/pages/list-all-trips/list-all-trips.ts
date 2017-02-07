@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import {LoginPage} from "../login/login";
-import {AddTripPage} from "../add-trip/add-trip";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
-<<<<<<< HEAD
 import {Trip, User} from "../../models/models";
-=======
 import {Trip} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
->>>>>>> 970cfdf29ce6493c8356cb33a7a60f1ca4118788
 
 /*
   Generated class for the ListAllTrips page.

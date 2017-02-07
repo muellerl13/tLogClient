@@ -34,10 +34,6 @@ export class Tlog {
     this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}/comment`,{"trip":trip, "user":user})
       .toPromise().then(res =>res.json());
 
-  commentOnTrip = (trip: Trip, user:User) : Promise<Trip> =>
-    this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}/comment`,{"trip":trip, "user":user})
-      .toPromise().then(res =>res.json());
-
   filterImage = (poiId, filterType, imageId):Promise<POI> => this.authHttp.patch(`${this.serverconfig.poiURI}/${poiId}/filterImage`,{"filterType":filterType,"imageId":imageId}).toPromise().then((res) => res.json());
 
   deleteImage = (imageId, poi:POI):Promise<POI> => this.authHttp.delete(`${this.serverconfig.poiURI}/${poi._id}/image/${imageId}`).toPromise().then((res) => res.json());
@@ -82,7 +78,7 @@ export class Tlog {
       .toPromise().then(res => {
       console.log("GOT UPDATE RESPONSE: " + res.json());
       return res.json()
-  });
+    });
 
   getImage = (imageId: string) =>
     this.authHttp.get(`${this.serverconfig.poiURI}/image/${imageId}`).toPromise();
@@ -94,7 +90,6 @@ export class Tlog {
         xhr.open("GET", `${this.serverconfig.poiURI}/image/${imageId}`);
         xhr.setRequestHeader("authorization", `Bearer ${token}`);
         xhr.responseType = "arraybuffer";
-
         xhr.onload = function (e) {
           // Obtain a blob: URL for the image data.
           let arrayBufferView = new Uint8Array(this.response);
