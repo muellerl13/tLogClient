@@ -4,8 +4,12 @@ import {LoginPage} from "../login/login";
 import {AddTripPage} from "../add-trip/add-trip";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
+<<<<<<< HEAD
+import {Trip, User} from "../../models/models";
+=======
 import {Trip} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
+>>>>>>> 970cfdf29ce6493c8356cb33a7a60f1ca4118788
 
 /*
   Generated class for the ListAllTrips page.
@@ -22,6 +26,7 @@ export class ListAllTripsPage {
   selectedItem: any;
   icons: string[];
   items: Array<Trip>;
+  user: User = new User();
 
   constructor(public navCtrl: NavController,
   public navParams: NavParams,
@@ -34,9 +39,16 @@ export class ListAllTripsPage {
   }
 
   ionViewDidLoad() {
+    this.security.getUser()
+      .then((rUser)=> {
+        this.user = rUser
+      })
+      .catch((err) => {
+        this.showAlert("Error",`Could not retrieve user: ${err._body}`)}
+      );
   }
 
-  save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID,liked)
+  save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID,liked,this.user)
     .then(
       trip => console.log("save worked and this is trip :"+trip)
     )

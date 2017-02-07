@@ -26,8 +26,12 @@ export class Tlog {
 
   getMyPois = (): Promise<Array<POI>> => this.authHttp.get(this.serverconfig.ownPoiURI).toPromise().then((res) => res.json());
 
-  likeDislikeTrip = (tripID: string, trip: Trip) : Promise<Trip> =>
-    this.authHttp.patch(`${this.serverconfig.tripURI}/${tripID}/like`,trip)
+  likeDislikeTrip = (tripID: string, trip: Trip, user: User) : Promise<Trip> =>
+    this.authHttp.patch(`${this.serverconfig.tripURI}/${tripID}/like`,trip,user)
+      .toPromise().then(res =>res.json());
+
+  commentOnTrip = (trip: Trip, user:User) : Promise<Trip> =>
+    this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}/comment`,{"trip":trip, "user":user})
       .toPromise().then(res =>res.json());
 
   commentOnTrip = (trip: Trip, user:User) : Promise<Trip> =>

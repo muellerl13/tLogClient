@@ -5,7 +5,6 @@ import {Serverconfig} from "../../providers/serverconfig";
 import {Tlog} from "../../providers/tlog";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
-
 /*
  Generated class for the ShowPoi page.
 
