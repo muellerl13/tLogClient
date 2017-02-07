@@ -24,13 +24,14 @@
         </div>
 
         <div id="div2">
-          <button type="submit" style="width: 30px !important;  background-color: #2ec95c;"
-                  class="listTripsButtons likeButton" ion-button icon-only likeTrip  (click)="save(item._id,true)">
+
+          <button type="submit" style="width: 30px !important;  background-color: #2ec95c;" *ngIf="item.liked"
+                  class="listTripsButtons likeButton" ion-button icon-only likeTrip  (click)="likeTrip(item._id,item.liked)">
             <i class="fa ion-ios-heart" aria-hidden="true"></i>
           </button>
 
-          <button type="submit" style="width: 30px !important; background-color: #f30d0d !important;"
-                  class="listTripsButtons dislikeButton" ion-button icon-only likeDislike  (click)="save(item._id,false)">
+          <button type="submit" style="width: 30px !important; background-color: #f30d0d !important;" *ngIf="item.liked==false"
+                  class="listTripsButtons dislikeButton" ion-button icon-only likeDislike  (click)="likeTrip(item._id,item.liked)">
             <i class="fa ion-ios-heart" aria-hidden="true"></i>
           </button>
         </div>
