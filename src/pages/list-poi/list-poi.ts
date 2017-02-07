@@ -95,8 +95,8 @@ export class ListPOIPage {
     console.log("Deleting POI");
     this.tLogService.deletePoi(poi)
       .then(deletedPoi => {
+        this.navCtrl.push(ListPOIPage);
         this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
-        this.navCtrl.pop();
       })
       .catch(err => {
         this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
