@@ -55,6 +55,7 @@ export class ListPOIPage {
     loading.present()
       .then(this.tLogService.getMyPois)
       .then(pois => this.items = pois).then(() => {
+      this.poisSearched = this.items;
       loading.dismiss();
     })
       .catch(err => {
@@ -71,7 +72,7 @@ export class ListPOIPage {
 
   ionViewWillEnter = () => {
     this.security.isNotloggedIn().then(exp => {
-      if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
+      if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs();
     });
   };
 
