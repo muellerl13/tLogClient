@@ -5,7 +5,6 @@ import {AddTripPage} from "../add-trip/add-trip";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
 import {Trip, User} from "../../models/models";
-import {Trip} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
 
 

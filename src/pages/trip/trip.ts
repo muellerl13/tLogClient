@@ -8,6 +8,7 @@ import {Trip, POI} from "../../models/models";
 import {AddPoiPage} from "../add-poi/add-poi";
 import {ShowPoiPage} from "../show-poi/show-poi";
 import {AddImagePage} from "../add-image/add-image";
+import {EditImagePage} from "../edit-image/edit-image";
 
 
 /*
@@ -78,7 +79,20 @@ export class TripPage {
           handler: () => {
             this.addImage(poi);
           }
-        },{
+        },
+        {
+          text: 'Edit Image from POI',
+          handler: () => {
+            this.editImagePoi(poi);
+          }
+        },
+        {
+          text: 'Delete POI',
+          handler: () => {
+            this.deletePoi(poi);
+          }
+        },
+        {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -180,6 +194,22 @@ export class TripPage {
   });
 
   addImage = (poi:POI) => this.navCtrl.push(AddImagePage,{poi:poi,tripID: this.trip._id});
+
+  editImagePoi = (poi) => this.navCtrl.push(EditImagePage,{
+    poi:poi
+  });
+
+  deletePoi = (poi:POI)  => {
+    console.log("Deleting POI");
+    this.tlog.deletePoi(poi)
+      .then(deletedPoi => {
+        this.showAlert("Delete",`${deletedPoi.name} was successfully deleted`);
+        this.navCtrl.pop();
+      })
+      .catch(err => {
+        this.showAlert("Error", `Could not delet POI: ${err.json().message}`)
+      })
+  }
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {

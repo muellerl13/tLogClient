@@ -9,6 +9,7 @@ import {Security} from "../../providers/security";
 import {ShowPoiPage} from "../show-poi/show-poi";
 import {AddPoiPage} from "../add-poi/add-poi";
 import {EditImagePage} from "../edit-image/edit-image";
+import {AddImagePage} from "../add-image/add-image";
 
 /*
   Generated class for the ListPOI page.
@@ -117,12 +118,6 @@ export class ListPOIPage {
           text: 'Edit POI',
           handler: () => {
             this.editPoi(poi);
-          }
-        },
-        {
-          text: 'Edit Image from POI',
-          handler: () => {
-            this.editImagePoi(poi);
           }
         },
         {
