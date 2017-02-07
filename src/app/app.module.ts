@@ -26,6 +26,7 @@ import {ListAllTripsPage} from "../pages/list-all-trips/list-all-trips";
 import {EditImagePage} from "../pages/edit-image/edit-image";
 import {LogoutPage} from "../pages/logout/logout";
 import {AddCommentPage} from "../pages/add-comment/add-comment";
+import {ShowTripPage} from "../pages/show-trip/show-trip";
 
 
 
@@ -55,6 +56,7 @@ export function getAuthHttp(http) {
     AddCommentPage,
     AddPoiPage,
     ShowPoiPage,
+    ShowTripPage,
     AddImagePage,
     ListPOIPage,
     ListAllPoisPage,
@@ -80,6 +82,7 @@ export function getAuthHttp(http) {
     AddCommentPage,
     AddPoiPage,
     ShowPoiPage,
+    ShowTripPage,
     AddImagePage,
     ListPOIPage,
     ListAllPoisPage,

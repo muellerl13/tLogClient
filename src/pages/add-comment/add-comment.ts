@@ -20,7 +20,7 @@ export class AddCommentPage {
 
   commentForm: FormGroup;
   content:string;
-  userID:string;
+  user:string;
 
   constructor(public navCtrl: NavController, private fb: FormBuilder, private tLogService: Tlog,
               private alertCtrl: AlertController,private navParams: NavParams, private security: Security) {}
@@ -42,8 +42,8 @@ export class AddCommentPage {
   save = () => {
     this.content = this.commentForm.get("content").value;
     this.security.getUser()
-      .then(user => this.userID = user.id)
-      .then(trip => this.tLogService.commentOnTrip(this.navParams.get("tripID"), this.userID, this.content))
+      .then(user => this.user = user.username)
+      .then(trip => this.tLogService.commentOnTrip(this.navParams.get("tripID"), this.user, this.content))
       .then(() => this.navCtrl.pop())
       .catch((err) => {
       this.showAlert("Error",`Could not retrieve user: ${err._body}`)}

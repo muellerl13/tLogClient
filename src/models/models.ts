@@ -11,7 +11,7 @@ export class User {
 
 export interface Image {
   id: string;
-  descrption?: string;
+  description?: string;
   uploaded: string;
   user: string;
   url?: SafeUrl;
@@ -29,6 +29,13 @@ export class POI {
   tags?: string;
 }
 
+export class Comment {
+  _id?: string;
+  creator?: {username: {local: string}};
+  createdAt?: Date;
+  content: string;
+}
+
 export class Trip {
   _id?: string;
   name: string;
@@ -38,5 +45,7 @@ export class Trip {
   createdAt?: Date;
   creator?: {username: {local: string}};
   pois?:[POI];
-  like:Boolean;
+  likes?: [{userId; username: string}];
+  liked?: boolean;
+  comments?: [Comment];
 }

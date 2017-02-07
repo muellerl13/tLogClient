@@ -11,6 +11,7 @@ import {Trip} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
 import {AddTripPage} from "../add-trip/add-trip";
 import {TripPage} from "../trip/trip";
+import {ShowTripPage} from "../show-trip/show-trip";
 
 
 
@@ -84,6 +85,10 @@ export class ListPage {
     trip:tripID
   });
 
+  showTripDetails = (tripID) => this.navCtrl.push(ShowTripPage,{
+    trip:tripID
+  });
+
   editTrip = (tripID) => this.navCtrl.push(AddTripPage,{
     trip:tripID
   });
@@ -115,7 +120,7 @@ export class ListPage {
         {
           text: 'Show Details',
           handler: () => {
-            //this.showTripDetails(tripID);
+            this.showTripDetails(tripID);
           }
         },
         {
