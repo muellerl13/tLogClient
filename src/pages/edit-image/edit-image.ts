@@ -5,6 +5,7 @@ import {Tlog} from "../../providers/tlog";
 import {Security} from "../../providers/security";
 import {ShowPoiPage} from "../show-poi/show-poi";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ListPOIPage} from "../list-poi/list-poi";
 
 /*
   Generated class for the EditImage page.
@@ -49,25 +50,33 @@ export class EditImagePage {
   filterGray = (imageId) => {
     this.tLogService.filterImage(this.poi._id, "gray", imageId)
       .then((res) =>
-        this.navCtrl.push(ShowPoiPage,{
-        poi:res
-      }))
+        this.navCtrl.push(ListPOIPage))
       .catch(err => this.showAlert("ERROR: Could not filter Image", err))
   };
 
   filterSepia = (imageId) => {
     this.tLogService.filterImage(this.poi._id, "sepia", imageId)
       .then((res) =>
-        this.navCtrl.push(ShowPoiPage,{
-          poi:res
-        }))
+        this.navCtrl.push(ListPOIPage))
+      .catch(err => this.showAlert("ERROR: Could not filter Image", err))
+  };
+
+  filterWarm = (imageId) => {
+    this.tLogService.filterImage(this.poi._id, "warm", imageId)
+      .then((res) =>
+        this.navCtrl.push(ListPOIPage))
+      .catch(err => this.showAlert("ERROR: Could not filter Image", err))
+  };
+
+  filterCold = (imageId) => {
+    this.tLogService.filterImage(this.poi._id, "cold", imageId)
+      .then((res) =>
+        this.navCtrl.push(ListPOIPage))
       .catch(err => this.showAlert("ERROR: Could not filter Image", err))
   };
 
   deleteImage = (imageId:String) => {
-    this.tLogService.deleteImage(imageId,this.poi).then((res) => this.navCtrl.push(ShowPoiPage,{
-      poi:res
-    }))
+    this.tLogService.deleteImage(imageId,this.poi).then((res) => this.navCtrl.push(ListPOIPage))
   }
 
 }
