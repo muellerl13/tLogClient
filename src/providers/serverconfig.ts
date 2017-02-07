@@ -22,6 +22,7 @@ export class Serverconfig {
   private _allPoisURI = `${this.host}/poi`;
   private _deletePOI = `${this.host}/poi`;
   private _deleteImage = `${this.host}/poi/image`;
+  private _allTrips = `${this._host}/trip/all`;
   private _getNotifications = `${this.host}/user/notifications`;
 
   public get host():string {return this._host};
@@ -35,6 +36,7 @@ export class Serverconfig {
   public get allPoisURI(){return this._allPoisURI};
   public get deletePOI(){return this._deletePOI};
   public get deleteImage(){return this._deleteImage};
+  public get allTrips(){return this._allTrips};
   public get getNotifications(){return this._getNotifications};
 
   constructor() {
