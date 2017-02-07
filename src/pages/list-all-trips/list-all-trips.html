@@ -15,16 +15,13 @@
   <ion-list >
     <ion-searchbar (ionInput)="getSearchedTrips($event)"></ion-searchbar>
     <div *ngFor="let item of tripsSearched">
-        <div id="div1">
+
           <button ion-item (click)="itemTapped($event, item._id, item)">
             <i class="fa fa-map-signs" style="color: brown" aria-hidden="true"></i>
 
             {{item.name }} created by {{item.creator.local.username}}
           </button>
-        </div>
-
-        <div id="div2">
-
+          <ion-buttons>
           <button type="submit" style="width: 30px !important;"
                   class="AddComment" ion-button color="light" icon-only AddComment  (click)="addComment(item._id)">
             <i class="fa ion-ios-quote" aria-hidden="true"></i>
@@ -38,8 +35,9 @@
           <button type="submit" style="width: 30px !important; background-color: #f30d0d !important;" *ngIf="item.liked==false"
                   class="listTripsButtons dislikeButton" ion-button icon-only likeDislike  (click)="likeTrip(item._id,item.liked)">
             <i class="fa ion-ios-heart" aria-hidden="true"></i>
-          </button>
-        </div>
+          </button></ion-buttons>
+          <p><b><font color="red">{{item.likes.length}}</font> Likes</b></p>
+
 
 
     </div>
