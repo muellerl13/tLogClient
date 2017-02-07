@@ -5,6 +5,7 @@ import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
 import {Trip, User} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
+import {AddCommentPage} from "../add-comment/add-comment";
 
 
 /*
@@ -74,7 +75,7 @@ export class ListAllTripsPage {
     this.save(tripID,liked);
   }
 
-  //addComment(tripID)
+  addComment = (tripID) => this.navCtrl.push(AddCommentPage, {tripID: tripID});
 
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,

@@ -54,7 +54,6 @@ export class AddTripPage {
   ngOnInit(): void {
     this.action = this.tLogService.addTrip;
     let trip = this.navParams.get("trip");
-    console.log(trip)
     if (trip) {
       this.mode = "edit";
       this.tLogService.loadTrip(trip).then(trip => {this.trip = trip;
