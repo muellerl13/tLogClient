@@ -8,6 +8,7 @@ import {Trip, POI} from "../../models/models";
 import {AddPoiPage} from "../add-poi/add-poi";
 import {ShowPoiPage} from "../show-poi/show-poi";
 import {AddImagePage} from "../add-image/add-image";
+import {EditImagePage} from "../edit-image/edit-image";
 
 
 /*
@@ -69,16 +70,18 @@ export class TripPage {
           }
         },
         {
-          text: 'Edit POI',
-          handler: () => {
-            this.editPOI(poi);
-          }
-        },{
           text: 'Add Image',
           handler: () => {
             this.addImage(poi);
           }
-        },{
+        },
+        {
+          text: 'Edit Image from POI',
+          handler: () => {
+            this.editImagePoi(poi);
+          }
+        },
+        {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -164,22 +167,15 @@ export class TripPage {
     this.presentPOIActionSheet(poi);
   };
 
-
-  editPOI = (poi:POI) => {
-    console.log("About to edit POI " + JSON.stringify(poi));
-    this.navCtrl.push(AddPoiPage,
-      {
-        poi: poi,
-        tripID: this.trip._id,
-        coordinates: {lng: poi.loc.coordinates[0], lat:poi.loc.coordinates[1]}
-      });
-  };
-
   showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
     poi:poi
   });
 
   addImage = (poi:POI) => this.navCtrl.push(AddImagePage,{poi:poi,tripID: this.trip._id});
+
+  editImagePoi = (poi) => this.navCtrl.push(EditImagePage,{
+    poi:poi
+  })
 
   addPOI = () => this.navCtrl.push(AddPoiPage,
     {

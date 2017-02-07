@@ -50,7 +50,9 @@ export class ListAllPoisPage {
     loading.present()
       .then(this.tLogService.getAllPois)
       .then(pois => this.items = pois).then(() => {
+      this.poisSearched = this.items;
       loading.dismiss();
+      console.log(this.items);
     })
       .catch(err => {
         loading.dismiss();
