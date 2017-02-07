@@ -7,12 +7,19 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>AddComment</ion-title>
+    <ion-title>Add Comment</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-textarea type="text" formControlName="content" rows="5"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <button (click)="save()"  ion-button >Save</button>
+  </form>
 </ion-content>

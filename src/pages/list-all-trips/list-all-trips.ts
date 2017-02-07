@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {
+  NavController, NavParams, AlertController, LoadingController, ActionSheet,
+  ActionSheetController
+} from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
 import {Trip, User} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
+import {AddCommentPage} from "../add-comment/add-comment";
 
 
 /*
@@ -30,7 +34,7 @@ export class ListAllTripsPage {
   private security: Security,
   private tLogService: Tlog,
   private alertCtrl: AlertController,
-  private loadingCtrl: LoadingController) {
+  private loadingCtrl: LoadingController, private asCtrl: ActionSheetController) {
     this.selectedItem = navParams.get('item');
     this.items = [];
     this.tripsSearched = [];
@@ -48,7 +52,10 @@ export class ListAllTripsPage {
 
   save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID)
     .then(
-      trip => console.log("save worked and this is trip :"+trip.name+" "+liked)
+      trip => {console.log("save worked and this is trip :"+trip.name+" "+liked)
+               let index = this.tripsSearched.map(tripR=>tripR._id).indexOf(trip._id);
+               this.tripsSearched[index] = trip;
+      }
     )
     .catch(
       err => this.showAlert("ERROR",`${err.json().message}`)
@@ -64,17 +71,16 @@ export class ListAllTripsPage {
     }
   }
 
-  like(tripID,liked){
-    console.log("oh you like )" +tripID + liked);
-    this.save(tripID,liked);
+  likeTrip(tripId,liked){
+    if(liked == true){
+      liked = false;
+    }else if(liked == false){
+      liked = true;
+    }
+    this.save(tripId, liked);
   }
 
-  dislike(tripID,liked){
-    console.log("oh you don't like )" +tripID + liked);
-    this.save(tripID,liked);
-  }
-
-  //addComment(tripID)
+  addComment = (tripID) => this.navCtrl.push(AddCommentPage, {tripID: tripID});
 
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,
@@ -106,15 +112,41 @@ export class ListAllTripsPage {
       });
   };
 
+  presentTripActionSheet = (tripID):ActionSheet =>
+    this.asCtrl.create({
+      buttons: [
+        {
+          text: 'Show on Map',
+          handler: () => {
+            this.showTrip(tripID);
+          }
+        },
+        {
+          text: 'Show Details',
+          handler: () => {
+            //this.showTripDetails(tripID);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    })
+
   ionViewWillEnter = () => {
     this.security.isNotloggedIn().then(exp => {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()
     });
   };
 
-  itemTapped(event, tripID,item) {
-    this.navCtrl.push(TripGlobalPage, {
-      trip: tripID
-    });
+  showTrip = (tripID) => this.navCtrl.push(TripGlobalPage, {
+    trip: tripID
+  });
+
+  itemTapped(event, tripID) {
+    this.presentTripActionSheet(tripID).present();
   }
 }
