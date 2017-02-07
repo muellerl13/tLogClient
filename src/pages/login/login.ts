@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, AlertController} from 'ionic-angular';
+import {NavController, AlertController, MenuController} from 'ionic-angular';
 import {Security} from "../../providers/security";
 import {RegisterPage} from "../register/register";
 import {ListPage} from "../list/list";
@@ -20,8 +20,14 @@ export class LoginPage {
   public password: string;
   public username: string;
   public error: string;
-  constructor(private navCtrl: NavController, private security: Security, private alertCtrl: AlertController) {
+  constructor(private navCtrl: NavController, private security: Security, private alertCtrl: AlertController,private menuCtrl: MenuController) {
+      this.menuCtrl.swipeEnable(false);
 
+  }
+
+
+  ionViewWillLeave(){
+    this.menuCtrl.swipeEnable(true);
   }
 
   showAlert = (title:string,message:string) =>
@@ -34,7 +40,6 @@ export class LoginPage {
       .catch((err) => {
         this.showAlert("Error",`Could not log you in: ${err._body}`)}
       );
-
 
   register = () => this.navCtrl.push(RegisterPage)
 

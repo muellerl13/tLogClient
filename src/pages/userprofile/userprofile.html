@@ -29,26 +29,26 @@
 
   </ion-card>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <ion-list no-lines="">
-      <h2>Username: </h2><ion-item><ion-input type="text" placeholder={{user.username}} formControlName="username"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.username" class="item-md-danger">
-        <p>{{ formErrors.username }}</p>
-      </ion-item>
-      <h2>Email: </h2><ion-item>
-        <ion-input type="text" placeholder={{user.email}} formControlName="email"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.email" class="item-md-danger">
-        <p>{{ formErrors.email }}</p>
-      </ion-item>
+  <ion-list no-lines="">
+    <h2>Username: </h2><ion-item><ion-input type="text" placeholder={{user.username}} formControlName="username"></ion-input>
+  </ion-item>
+    <ion-item *ngIf="formErrors.username" class="item-md-danger">
+      <p>{{ formErrors.username }}</p>
+    </ion-item>
+    <h2>Email: </h2><ion-item>
+    <ion-input type="text" placeholder={{user.email}} formControlName="email"></ion-input>
+  </ion-item>
+    <ion-item *ngIf="formErrors.email" class="item-md-danger">
+      <p>{{ formErrors.email }}</p>
+    </ion-item>
 
-      <h2>Password: </h2><ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      </ion-item>
-      <ion-item class="item-md-danger" *ngIf="formErrors.password" >
-        <p>{{ formErrors.password }}</p>
-      </ion-item>
-    </ion-list>
-    <button (click)="save()"  ion-button [disabled]="!registerForm.valid">Update</button>
-  </form>
+    <h2>Password: </h2><ion-item>
+    <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+  </ion-item>
+    <ion-item class="item-md-danger" *ngIf="formErrors.password" >
+      <p>{{ formErrors.password }}</p>
+    </ion-item>
+  </ion-list>
+  <button (click)="save()"  ion-button [disabled]="!registerForm.valid">Update</button>
+</form>
 </ion-content>

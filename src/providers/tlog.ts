@@ -36,6 +36,8 @@ export class Tlog {
 
   deletePoi = (poi:POI): Promise<POI> => this.authHttp.delete(`${this.serverconfig.deletePOI}/${poi._id}`).toPromise().then((res) => res.json());
 
+  deleteTrip = (trip:Trip): Promise<Trip> => this.authHttp.delete(`${this.serverconfig.tripURI}/${trip._id}`).toPromise().then((res) => res.json());
+
   getAllPois = (): Promise<Array<POI>> => this.authHttp.get(this.serverconfig.allPoisURI).toPromise().then((res) => res.json());
 
   addTrip = (trip: Trip): Promise<Trip> =>
@@ -53,6 +55,13 @@ export class Tlog {
 
   updatePOI = (tripID: string, poi: POI): Promise<POI> =>
     this.authHttp.patch(`${this.serverconfig.poiURI}/${poi._id}`, poi)
+      .toPromise().then(res => {
+      console.log("GOT UPDATE RESPONSE: " + res.json());
+      return res.json()
+    });
+
+  updateTrip = (trip: Trip): Promise<Trip> =>
+    this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}`, trip)
       .toPromise().then(res => {
       console.log("GOT UPDATE RESPONSE: " + res.json());
       return res.json()

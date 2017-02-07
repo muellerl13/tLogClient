@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, AlertController} from 'ionic-angular';
+import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Trip} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
@@ -17,18 +17,20 @@ import {Tlog} from "../../providers/tlog";
 export class AddTripPage {
 
   tripForm: FormGroup;
-  trip = new Trip();
+  trip:Trip = new Trip();
+  mode = "new";
+  action: any;
 
-  constructor(public navCtrl: NavController, private fb: FormBuilder, private tLogService: Tlog, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, private fb: FormBuilder, private tLogService: Tlog, private alertCtrl: AlertController,private navParams: NavParams) {}
 
-  buildForm(): void {
+  buildForm = (): void => {
     this.tripForm = this.fb.group({
       'name': [this.trip.name,[Validators.required,Validators.maxLength(100),Validators.minLength(3)]],
       'description': [this.trip.description,[Validators.maxLength(500)]],
       'begin': [this.trip.begin,[]],
-      'end': [this.trip.begin,[]]
+      'end': [this.trip.end,[]]
     });
-  }
+  };
 
   showAlert = (title:string,message:string) => this.alertCtrl.create({title: title, message: message, buttons: ['OK']}).present();
 
@@ -49,6 +51,13 @@ export class AddTripPage {
   onSubmit = () => {console.log("Submitted TRIP Form!!")};
 
   ngOnInit(): void {
+    this.action = this.tLogService.addTrip;
+    let trip = this.navParams.get("trip");
+    if (trip) {
+      this.mode = "edit";
+      this.tLogService.loadTrip(trip).then(trip => this.trip = trip);
+      this.action = this.tLogService.updateTrip;
+    };
     this.buildForm();
     this.tripForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -77,13 +86,31 @@ export class AddTripPage {
     'end':''
   };
 
-  save = () => this.tLogService.addTrip(this.tripForm.value)
-    .then(
-      trip => this.navCtrl.pop()
-    )
-    .catch(
-      err => this.showAlert("ERROR",`${err.json().message}`)
-    );
+  save = () => {
+    const trip = this.tripForm.value;
+    trip._id = this.trip._id;
+    this.action(trip)
+      .then(
+        trip => this.navCtrl.pop()
+      )
+      .catch(
+        err => this.showAlert("ERROR",`${err.json().message}`)
+      );
+  };
+
+  deleteTrip = ()  => {
+    console.log("Deleting Trip");
+    const trip = this.tripForm.value;
+    trip._id = this.trip._id;
+    this.tLogService.deleteTrip(trip)
+      .then(deletedTrip => {
+        this.showAlert("Delete",`${deletedTrip.name} was successfully deleted`);
+        this.navCtrl.pop();
+      })
+      .catch(err => {
+        this.showAlert("Error", `Could not delete Trip: ${err.json().message}`)
+      })
+  }
 
   ionViewDidLoad() {
 

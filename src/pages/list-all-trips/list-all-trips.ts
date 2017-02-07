@@ -73,6 +73,11 @@ export class ListAllTripsPage {
       if (this.items.length === 0) {
         this.showAlert("INFO", "You do not have any trips yet. Press the Plus Icon to create one.")
       }
+      else{
+     //   for (i = 0, len = this.items.length; i < len; i++) {
+
+     //   }
+      }
     })
       .catch(err => {
         loading.dismiss();

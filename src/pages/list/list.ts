@@ -73,9 +73,20 @@ export class ListPage {
     trip:tripID
   });
 
-  editTrip = (tripID) => {};
+  editTrip = (tripID) => this.navCtrl.push(AddTripPage,{
+    trip:tripID
+  });
 
-  deleteTrip = (tripID) => {};
+  deleteTrip = (tripID) => {
+    this.tLogService.loadTrip(tripID).then(trip => this.tLogService.deleteTrip(trip))
+      .then(deletedTrip => {
+        this.showAlert("Delete",`${deletedTrip.name} was successfully deleted`);
+        this.navCtrl.pop();
+      })
+      .catch(err => {
+        this.showAlert("Error", `Could not delete Trip: ${err.json().message}`)
+      })
+  }
 
   itemTapped(event, tripID) {
     this.presentTripActionSheet(tripID).present();
@@ -85,7 +96,7 @@ export class ListPage {
     this.asCtrl.create({
       buttons: [
         {
-          text: 'Show Details',
+          text: 'Show POIs',
           handler: () => {
             this.showTrip(tripID);
           }
