@@ -74,6 +74,8 @@ export class ListAllTripsPage {
     this.save(tripID,liked);
   }
 
+  //addComment(tripID)
+
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,
     message: message,

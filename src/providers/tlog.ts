@@ -30,8 +30,8 @@ export class Tlog {
     this.authHttp.patch(`${this.serverconfig.tripURI}/${tripID}/like`,{})
       .toPromise().then(res =>res.json());
 
-  commentOnTrip = (trip: Trip, user:User) : Promise<Trip> =>
-    this.authHttp.patch(`${this.serverconfig.tripURI}/${trip._id}/comment`,{"trip":trip, "user":user})
+  commentOnTrip = (tripID: string, comment:Comment) : Promise<Trip> =>
+    this.authHttp.post(`${this.serverconfig.tripURI}/${tripID}/comment`,comment)
       .toPromise().then(res =>res.json());
 
   filterImage = (poiId, filterType, imageId):Promise<POI> => this.authHttp.patch(`${this.serverconfig.poiURI}/${poiId}/filterImage`,{"filterType":filterType,"imageId":imageId}).toPromise().then((res) => res.json());

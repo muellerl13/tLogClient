@@ -24,6 +24,7 @@ export class AddTripPage {
   constructor(public navCtrl: NavController, private fb: FormBuilder, private tLogService: Tlog, private alertCtrl: AlertController,private navParams: NavParams) {}
 
   buildForm = (): void => {
+    console.log(this.trip)
     this.tripForm = this.fb.group({
       'name': [this.trip.name,[Validators.required,Validators.maxLength(100),Validators.minLength(3)]],
       'description': [this.trip.description,[Validators.maxLength(500)]],
@@ -53,9 +54,12 @@ export class AddTripPage {
   ngOnInit(): void {
     this.action = this.tLogService.addTrip;
     let trip = this.navParams.get("trip");
+    console.log(trip)
     if (trip) {
       this.mode = "edit";
-      this.tLogService.loadTrip(trip).then(trip => this.trip = trip);
+      this.tLogService.loadTrip(trip).then(trip => {this.trip = trip;
+        this.tripForm.patchValue({name: this.trip.name, description: this.trip.description,
+          begin: this.trip.begin, end: this.trip.end})});
       this.action = this.tLogService.updateTrip;
     };
     this.buildForm();
