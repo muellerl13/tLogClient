@@ -4,7 +4,6 @@ import {POI} from "../../models/models";
 import {Serverconfig} from "../../providers/serverconfig";
 import {Tlog} from "../../providers/tlog";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {ListPage} from "../list/list";
 
 
 /*

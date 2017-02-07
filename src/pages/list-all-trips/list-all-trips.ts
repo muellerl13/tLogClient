@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
-import {TripPage} from "../trip/trip";
 import {LoginPage} from "../login/login";
 import {AddTripPage} from "../add-trip/add-trip";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
 import {Trip} from "../../models/models";
+import {TripGlobalPage} from "../trip-global/trip-global";
 
 /*
   Generated class for the ListAllTrips page.
@@ -54,8 +54,6 @@ export class ListAllTripsPage {
     this.save(tripID,liked);
   }
 
-  addTrip = () => this.navCtrl.push(AddTripPage);
-
   showAlert = (title: string, message: string) => this.alertCtrl.create({
     title: title,
     message: message,
@@ -92,7 +90,7 @@ export class ListAllTripsPage {
   };
 
   itemTapped(event, tripID) {
-    this.navCtrl.push(TripPage, {
+    this.navCtrl.push(TripGlobalPage, {
       trip: tripID
     });
   }

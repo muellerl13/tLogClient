@@ -96,9 +96,15 @@ export class ListPage {
     this.asCtrl.create({
       buttons: [
         {
-          text: 'Show POIs',
+          text: 'Show on Map',
           handler: () => {
             this.showTrip(tripID);
+          }
+        },
+        {
+          text: 'Show Details',
+          handler: () => {
+            //this.showTripDetails(tripID);
           }
         },
         {

@@ -15,6 +15,7 @@ import {Serverconfig} from "../providers/serverconfig";
 import {Tlog} from "../providers/tlog";
 import {AddTripPage} from "../pages/add-trip/add-trip";
 import {TripPage} from "../pages/trip/trip";
+import {TripGlobalPage} from "../pages/trip-global/trip-global";
 import {AddPoiPage} from "../pages/add-poi/add-poi";
 import {ShowPoiPage} from "../pages/show-poi/show-poi";
 import {AddImagePage} from "../pages/add-image/add-image";
@@ -49,6 +50,7 @@ export function getAuthHttp(http) {
     RegisterPage,
     AddTripPage,
     TripPage,
+    TripGlobalPage,
     AddPoiPage,
     ShowPoiPage,
     AddImagePage,
@@ -72,6 +74,7 @@ export function getAuthHttp(http) {
     RegisterPage,
     AddTripPage,
     TripPage,
+    TripGlobalPage,
     AddPoiPage,
     ShowPoiPage,
     AddImagePage,
