@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {
+  NavController, NavParams, AlertController, LoadingController, ActionSheetController,
+  ActionSheet
+} from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {POI} from "../../models/models";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
+import {ShowPoiPage} from "../show-poi/show-poi";
 
 /*
   Generated class for the ListAllPois page.
@@ -23,7 +27,7 @@ export class ListAllPoisPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private tLogService: Tlog,
               private alertCtrl: AlertController, private security: Security,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController, private asCtrl: ActionSheetController) {
 
     this.selectedItem = navParams.get('item');
     this.items = [];
@@ -71,4 +75,31 @@ export class ListAllPoisPage {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadPOIs()
     });
   }
+
+  showPoi = (poi) => this.navCtrl.push(ShowPoiPage,{
+    poi:poi
+  });
+
+  itemTapped(event, poi) {
+    this.presentPOIActionSheet(poi).present();
+  }
+
+  presentPOIActionSheet = (poi:POI):ActionSheet =>
+    this.asCtrl.create({
+      //title: 'Modify your album',
+      buttons: [
+        {
+          text: 'Show Details',
+          handler: () => {
+            this.showPoi(poi);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    })
 }

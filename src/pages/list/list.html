@@ -18,7 +18,8 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item._id)">
+    <ion-searchbar (ionInput)="getSearchedTrips($event)"></ion-searchbar>
+    <button ion-item *ngFor="let item of tripsSearched" (click)="itemTapped($event, item._id)">
       <i class="fa fa-map-signs" aria-hidden="true"></i>
       {{item.name}}
 

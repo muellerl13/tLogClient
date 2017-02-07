@@ -21,7 +21,7 @@ export class ListPage {
   selectedItem: any;
   icons: string[];
   items: Array<Trip>;
-
+  tripsSearched: Array<Trip>;
 
 
   constructor(public navCtrl: NavController,
@@ -34,7 +34,7 @@ export class ListPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.items = [];
-
+    this.tripsSearched = [];
   }
 
   addTrip = () => this.navCtrl.push(AddTripPage)
@@ -45,6 +45,16 @@ export class ListPage {
     buttons: ['OK']
   }).present();
 
+  getSearchedTrips(ev:any){
+    this.tripsSearched = this.items;
+    let valueSearchbar = ev.target.value;
+    if (valueSearchbar && valueSearchbar.trim() != '') {
+      this.tripsSearched = this.tripsSearched.filter((items) => {
+        return (items.name.toLowerCase().indexOf(valueSearchbar.toLocaleLowerCase()) > -1);
+      })
+    }
+  }
+
   loadTrips = () => {
     const loading = this.loadingCtrl.create({
       content: "Fetching your trips"
@@ -52,6 +62,7 @@ export class ListPage {
     loading.present()
       .then(this.tLogService.getTrips)
       .then(trips => this.items = trips).then(() => {
+      this.tripsSearched = this.items;
       loading.dismiss();
       if (this.items.length === 0) {
         this.showAlert("INFO", "You do not have any trips yet. Press the Plus Icon to create one.")
