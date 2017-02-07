@@ -46,6 +46,9 @@ export class Tlog {
 
   getAllPois = (): Promise<Array<POI>> => this.authHttp.get(this.serverconfig.allPoisURI).toPromise().then((res) => res.json());
 
+  getNotifications = (userID: string): Promise<any> => this.authHttp.get(`${this.serverconfig.getNotifications}/${userID}`,{})
+    .toPromise().then((res) =>  res.json());
+
   addTrip = (trip: Trip): Promise<Trip> =>
     this.authHttp.post(this.serverconfig.tripURI, trip).toPromise()
       .then(res => res.json());

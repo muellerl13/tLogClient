@@ -10,8 +10,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Serverconfig {
 
-  private _host = "http://127.0.0.1:3000/api";
-  //private _host = "http://10.15.200.163:3000/api"; // Michi
+  //private _host = "http://127.0.0.1:3000/api";
+  private _host = "http://10.15.200.163:3000/api"; // Michi
   private _loginURI = `${this._host}/auth/login`;
   private _registerURI = `${this._host}/auth/signup`;
   private _mineURI = `${this._host}/trip/mine`;
@@ -23,6 +23,7 @@ export class Serverconfig {
   private _deletePOI = `${this.host}/poi`;
   private _deleteImage = `${this.host}/poi/image`;
   private _allTrips = `${this._host}/trip/all`;
+  private _getNotifications = `${this.host}/user/notifications`;
 
   public get host():string {return this._host};
   public get loginURI():string {return this._loginURI};
@@ -36,6 +37,7 @@ export class Serverconfig {
   public get deletePOI(){return this._deletePOI};
   public get deleteImage(){return this._deleteImage};
   public get allTrips(){return this._allTrips};
+  public get getNotifications(){return this._getNotifications};
 
   constructor() {
   }
