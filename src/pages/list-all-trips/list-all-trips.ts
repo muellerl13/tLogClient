@@ -110,7 +110,7 @@ export class ListAllTripsPage {
     });
   };
 
-  itemTapped(event, tripID) {
+  itemTapped(event, tripID,item) {
     this.navCtrl.push(TripGlobalPage, {
       trip: tripID
     });
