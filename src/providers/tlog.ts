@@ -22,7 +22,7 @@ export class Tlog {
 
   }
 
-  getTrips = (): Promise<Array<Trip>> => this.authHttp.get(this.serverconfig.mineURI).toPromise().then((res) => res.json());
+  getTrips = (): Promise<Array<Trip>> => this.authHttp.get(this.serverconfig.allTrips).toPromise().then((res) => res.json());
 
   getMyPois = (): Promise<Array<POI>> => this.authHttp.get(this.serverconfig.ownPoiURI).toPromise().then((res) => res.json());
 
@@ -30,8 +30,8 @@ export class Tlog {
     this.authHttp.patch(`${this.serverconfig.tripURI}/${tripID}/like`,{})
       .toPromise().then(res =>res.json());
 
-  commentOnTrip = (tripID: string, comment:Comment) : Promise<Trip> =>
-    this.authHttp.post(`${this.serverconfig.tripURI}/${tripID}/comment`,comment)
+  commentOnTrip = (tripID: string, userID:string, content:string) : Promise<Trip> =>
+    this.authHttp.post(`${this.serverconfig.tripURI}/${tripID}/comment`,{"user":userID, "content":content})
       .toPromise().then(res =>res.json());
 
   filterImage = (poiId, filterType, imageId):Promise<POI> => this.authHttp.patch(`${this.serverconfig.poiURI}/${poiId}/filterImage`,{"filterType":filterType,"imageId":imageId}).toPromise().then((res) => res.json());
@@ -45,6 +45,9 @@ export class Tlog {
   deleteTrip = (trip:Trip): Promise<Trip> => this.authHttp.delete(`${this.serverconfig.tripURI}/${trip._id}`).toPromise().then((res) => res.json());
 
   getAllPois = (): Promise<Array<POI>> => this.authHttp.get(this.serverconfig.allPoisURI).toPromise().then((res) => res.json());
+
+  getNotifications = (userID: string): Promise<any> => this.authHttp.get(`${this.serverconfig.getNotifications}/${userID}`,{})
+    .toPromise().then((res) =>  res.json());
 
   addTrip = (trip: Trip): Promise<Trip> =>
     this.authHttp.post(this.serverconfig.tripURI, trip).toPromise()
