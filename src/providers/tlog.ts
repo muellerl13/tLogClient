@@ -78,7 +78,7 @@ export class Tlog {
       .toPromise().then(res => {
       console.log("GOT UPDATE RESPONSE: " + res.json());
       return res.json()
-  });
+    });
 
   getImage = (imageId: string) =>
     this.authHttp.get(`${this.serverconfig.poiURI}/image/${imageId}`).toPromise();
@@ -90,7 +90,6 @@ export class Tlog {
         xhr.open("GET", `${this.serverconfig.poiURI}/image/${imageId}`);
         xhr.setRequestHeader("authorization", `Bearer ${token}`);
         xhr.responseType = "arraybuffer";
-
         xhr.onload = function (e) {
           // Obtain a blob: URL for the image data.
           let arrayBufferView = new Uint8Array(this.response);
