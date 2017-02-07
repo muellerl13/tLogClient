@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {
+  NavController, NavParams, AlertController, LoadingController, ActionSheet,
+  ActionSheetController
+} from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
@@ -31,7 +34,7 @@ export class ListAllTripsPage {
   private security: Security,
   private tLogService: Tlog,
   private alertCtrl: AlertController,
-  private loadingCtrl: LoadingController) {
+  private loadingCtrl: LoadingController, private asCtrl: ActionSheetController) {
     this.selectedItem = navParams.get('item');
     this.items = [];
     this.tripsSearched = [];
@@ -109,15 +112,41 @@ export class ListAllTripsPage {
       });
   };
 
+  presentTripActionSheet = (tripID):ActionSheet =>
+    this.asCtrl.create({
+      buttons: [
+        {
+          text: 'Show on Map',
+          handler: () => {
+            this.showTrip(tripID);
+          }
+        },
+        {
+          text: 'Show Details',
+          handler: () => {
+            //this.showTripDetails(tripID);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    })
+
   ionViewWillEnter = () => {
     this.security.isNotloggedIn().then(exp => {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()
     });
   };
 
-  itemTapped(event, tripID,item) {
-    this.navCtrl.push(TripGlobalPage, {
-      trip: tripID
-    });
+  showTrip = (tripID) => this.navCtrl.push(TripGlobalPage, {
+    trip: tripID
+  });
+
+  itemTapped(event, tripID) {
+    this.presentTripActionSheet(tripID).present();
   }
 }
