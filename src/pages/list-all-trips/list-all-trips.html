@@ -23,12 +23,12 @@
 
         <div id="div2">
           <button type="submit" style="width: 30px !important;  background-color: #2ec95c;"
-                  class="listTripsButtons likeButton" ion-button icon-only likeTrip  (click)="like(item._id,true)">
+                  class="listTripsButtons likeButton" ion-button icon-only likeTrip  (click)="save(item._id,true)">
             <i class="fa ion-ios-heart" aria-hidden="true"></i>
           </button>
 
           <button type="submit" style="width: 30px !important; background-color: #f30d0d !important;"
-                  class="listTripsButtons dislikeButton" ion-button icon-only likeDislike  (click)="dislike(item._id,false)">
+                  class="listTripsButtons dislikeButton" ion-button icon-only likeDislike  (click)="save(item._id,false)">
             <i class="fa ion-ios-heart" aria-hidden="true"></i>
           </button>
         </div>

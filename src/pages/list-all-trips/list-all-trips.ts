@@ -4,7 +4,6 @@ import {LoginPage} from "../login/login";
 import {Security} from "../../providers/security";
 import {Tlog} from "../../providers/tlog";
 import {Trip, User} from "../../models/models";
-import {Trip} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
 
 
@@ -45,9 +44,9 @@ export class ListAllTripsPage {
       );
   }
 
-  save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID,liked,this.user)
+  save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID)
     .then(
-      trip => console.log("save worked and this is trip :"+trip)
+      trip => console.log("save worked and this is trip :"+trip.name+" "+liked)
     )
     .catch(
       err => this.showAlert("ERROR",`${err.json().message}`)
