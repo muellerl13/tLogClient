@@ -7,7 +7,7 @@ import {
 
 import {Security} from '../../providers/security';
 import {LoginPage} from "../login/login";
-import {Trip} from "../../models/models";
+import {Trip, User} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
 import {AddTripPage} from "../add-trip/add-trip";
 import {TripPage} from "../trip/trip";
@@ -23,6 +23,7 @@ export class ListPage {
   icons: string[];
   items: Array<Trip>;
   tripsSearched: Array<Trip>;
+  user: User = new User();
 
 
   constructor(public navCtrl: NavController,
@@ -80,6 +81,29 @@ export class ListPage {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()
     });
   }
+
+  ionViewDidEnter = () => {
+
+    this.security.getUser()
+      .then((rUser)=> {
+        this.user = rUser
+        this.tLogService.getNotifications(this.user.id)
+          .then(trips =>{
+            let output = ""
+            if (trips.length>0){
+              for (let i = 0 ; i < trips.length; i++) {
+                output+=trips[i].tripname+" "
+              }
+              this.showAlert("You have new likes",output)
+            }
+
+      })
+      .catch((err) => {
+        this.showAlert("Error",`Could not retrieve user: ${err._body}`)}
+      );
+
+
+  })}
 
   showTrip = (tripID) => this.navCtrl.push(TripPage,{
     trip:tripID
