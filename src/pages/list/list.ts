@@ -120,7 +120,7 @@ export class ListPage {
   deleteTrip = (tripID) => {
     this.tLogService.loadTrip(tripID).then(trip => this.tLogService.deleteTrip(trip))
       .then(deletedTrip => {
-        this.showAlert("Delete",`${deletedTrip.name} was successfully deleted`);
+        this.showAlert("Delete",`Trip was successfully deleted`);
         this.loadTrips();
       })
       .catch(err => {

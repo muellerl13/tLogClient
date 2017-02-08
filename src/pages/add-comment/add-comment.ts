@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Trip} from "../../models/models";
 import {Tlog} from "../../providers/tlog";
 import {Security} from "../../providers/security";
-import {userInfo} from "os";
 
 /*
   Generated class for the AddComment page.

@@ -52,11 +52,10 @@ export class ListAllTripsPage {
 
   save = (tripID,liked) => this.tLogService.likeDislikeTrip(tripID)
     .then(
-      trip => {console.log("save worked and this is trip :"+trip.name+" "+liked)
-               let index = this.tripsSearched.map(tripR=>tripR._id).indexOf(trip._id);
+      trip => {let index = this.tripsSearched.map(tripR=>tripR._id).indexOf(trip._id);
                this.tripsSearched[index] = trip;
-      }
-    )
+      })
+    .then(() => this.loadTrips())
     .catch(
       err => this.showAlert("ERROR",`${err.json().message}`)
     );
@@ -99,11 +98,6 @@ export class ListAllTripsPage {
       loading.dismiss();
       if (this.items.length === 0) {
         this.showAlert("INFO", "You do not have any trips yet. Press the Plus Icon to create one.")
-      }
-      else{
-     //   for (i = 0, len = this.items.length; i < len; i++) {
-
-     //   }
       }
     })
       .catch(err => {
