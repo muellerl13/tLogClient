@@ -9,6 +9,7 @@ import {Tlog} from "../../providers/tlog";
 import {Trip, User} from "../../models/models";
 import {TripGlobalPage} from "../trip-global/trip-global";
 import {AddCommentPage} from "../add-comment/add-comment";
+import {ShowTripPage} from "../show-trip/show-trip";
 
 
 /*
@@ -118,7 +119,7 @@ export class ListAllTripsPage {
         {
           text: 'Show Details',
           handler: () => {
-            //this.showTripDetails(tripID);
+            this.showTripDetails(tripID);
           }
         },{
           text: 'Cancel',
@@ -135,6 +136,10 @@ export class ListAllTripsPage {
       if (exp) this.navCtrl.setRoot(LoginPage); else this.loadTrips()
     });
   };
+
+  showTripDetails = (tripID) => this.navCtrl.push(ShowTripPage,{
+    trip:tripID
+  });
 
   showTrip = (tripID) => this.navCtrl.push(TripGlobalPage, {
     trip: tripID
